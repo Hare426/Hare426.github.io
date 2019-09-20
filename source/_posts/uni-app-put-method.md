@@ -2,7 +2,7 @@
 title: uni-app PUT method
 category: uni-app
 tag: Basic
-date: 2019-09-09 22:15:20
+date: 2019-09-10 22:15:20
 ---
 
 **问题：前端传值后端接收到的均是null**
