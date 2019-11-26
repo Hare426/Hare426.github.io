@@ -1,7 +1,7 @@
 ---
 title: NPDP_Chapter2_组合管理_4
 category: NPDP
-tag: Reserve
+tags: [NPDP, 组合管理]
 date: 2019-11-24 21:43:20
 ---
 

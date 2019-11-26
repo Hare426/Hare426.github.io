@@ -1,7 +1,7 @@
 ---
 title: uni-app MQTT
 category: uni-app
-tag: MQTT
+tags: [MQTT, uni-app]
 date: 2019-09-09 21:53:20
 ---
 
@@ -141,7 +141,7 @@ methods:{
 ```
 
 ### 效果展示
-![uniapp-mqtt.png](/images/uniapp-mqtt.png)
+![uniapp-mqtt.png](/images/uni-app/uniapp-mqtt.png)
 
 
 

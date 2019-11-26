@@ -1,7 +1,7 @@
 ---
 title: Object To Array
-category: JavaScript
-tag: Basic
+category: Front-end
+tags: [JavaScript, Basic]
 date: 2019-09-09 13:05:50
 ---
 

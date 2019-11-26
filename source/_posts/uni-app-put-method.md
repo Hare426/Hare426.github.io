@@ -1,7 +1,7 @@
 ---
 title: uni-app PUT method
 category: uni-app
-tag: Basic
+tags: [uni-app, put]
 date: 2019-09-10 22:15:20
 ---
 

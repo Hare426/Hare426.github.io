@@ -1,7 +1,7 @@
 ---
 title: NPDP_Chapter1_新产品开发战略_1
 category: NPDP
-tag: Reserve
+tags: [NPDP, 新产品开发战略]
 date: 2019-09-09 22:15:20
 ---
 
