@@ -1,6 +1,6 @@
 ---
-title: 简单工厂模式
-category: Back-end
+title: 设计模式-简单工厂模式
+category: Design-pattern
 tags: [设计模式, 创造型模式, 简单工厂模式]
 date: 2019-12-13 15:29:20
 ---

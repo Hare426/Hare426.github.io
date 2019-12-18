@@ -1,6 +1,6 @@
 ---
-title: 工厂方法模式
-category: Back-end
+title: 设计模式-工厂方法模式
+category: Design-pattern
 tags: [设计模式, 创造型模式, 工厂方法模式]
 date: 2019-12-13 15:49:20
 ---

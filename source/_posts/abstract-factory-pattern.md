@@ -1,6 +1,6 @@
 ---
-title: 抽象工厂模式
-category: Back-end
+title: 设计模式-抽象工厂模式
+category: Design-pattern
 tags: [设计模式, 创造型模式, 抽象工厂模式]
 date: 2019-12-13 16:52:20
 ---

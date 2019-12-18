@@ -1,6 +1,6 @@
 ---
-title: 单例模式
-category: Back-end
+title: 设计模式-单例模式
+category: Design-pattern
 tags: [设计模式, 创造型模式, 单例模式]
 date: 2019-12-16 15:44:20
 ---

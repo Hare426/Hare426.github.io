@@ -1,6 +1,6 @@
 ---
 title: 面向对象设计原则
-category: Back-end
+category: Design-pattern
 tag: 面向对象设计原则
 date: 2019-12-12 17:22:20
 ---
