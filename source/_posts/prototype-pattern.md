@@ -15,7 +15,7 @@ date: 2019-12-18 15:56:20
 需要注意的是通过克隆方法所创建的对象是全新的对象，它们在内存中拥有新的地址，通常对克隆所产生的对象进行修改对原型对象不会造成任何影响，每一个克隆对象都是相互独立的。通过不同的方式修改可以得到一系列相似但不完全相同的对象。
 
 原型模式结构图：
-![原型模式结构图.png](/images/back-end/design-pattern/原型模式结构图.png)
+![原型模式结构图.png](/images/design-pattern/原型模式结构图.png)
 
 在原型模式结构图中包含如下几个角色：
 + Prototype（抽象原型类）：它是声明克隆方法的接口，是所有具体原型类的公共父类，可以是抽象类也可以是接口，甚至还可以是具体实现类。
@@ -87,7 +87,7 @@ Prototype obj2  = obj1.clone();
 此时，Object类相当于抽象原型类，所有实现了Cloneable接口的类相当于具体原型类。
 
 例：
-![原型模式1.png](/images/back-end/design-pattern/原型模式1.png)
+![原型模式1.png](/images/design-pattern/原型模式1.png)
 
 ```
 //工作周报WeeklyLog：具体原型类，考虑到代码的可读性和易理解性，只列出部分与模式相关的核心代码
@@ -163,7 +163,7 @@ class Client
 > 在浅克隆中，如果原型对象的成员变量是值类型，将复制一份给克隆对象；如果原型对象的成员变量是引用类型，则将引用对象的地址复制一份给克隆对象，也就是说原型对象和克隆对象的成员变量指向相同的内存地址。简单来说，在浅克隆中，当对象被复制时只复制它本身和其中包含的值类型的成员变量，而引用类型的成员对象并没有复制
 > 
 
-![原型模式2.png](/images/back-end/design-pattern/原型模式2.png)
+![原型模式2.png](/images/design-pattern/原型模式2.png)
 
 ```
 //附件类
@@ -241,7 +241,7 @@ class WeeklyLog implements Cloneable
 
 在Java语言中，如果需要实现深克隆，可以通过序列化(Serialization)等方式来实现。序列化就是将对象写到流的过程，写到流中的对象是原有对象的一个拷贝，而原对象仍然存在于内存中。通过序列化实现的拷贝不仅可以复制对象本身，而且可以复制其引用的成员对象，因此通过序列化将对象写到一个流中，再从流里将其读出来，可以实现深克隆。需要注意的是能够实现序列化的对象其类必须实现Serializable接口，否则无法实现序列化操作。下面我们使用深克隆技术来实现工作周报和附件对象的复制，由于要将附件对象和工作周报对象都写入流中，因此两个类均需要实现Serializable接口，其结构如图7-7所示：
 
-![原型模式3.png](/images/back-end/design-pattern/原型模式3.png)
+![原型模式3.png](/images/design-pattern/原型模式3.png)
 
 ```
 import  java.io.*;
@@ -340,10 +340,10 @@ class Client
 
 ##### 原型管理器的引入和实现
 带原型管理器的原型模式:
-![带原型管理器的原型模式.png](/images/back-end/design-pattern/带原型管理器的原型模式.png)
+![带原型管理器的原型模式.png](/images/design-pattern/带原型管理器的原型模式.png)
 
 例：
-![原型模式4.png](/images/back-end/design-pattern/原型模式4.png)
+![原型模式4.png](/images/design-pattern/原型模式4.png)
 
 ```
 import java.util.*;

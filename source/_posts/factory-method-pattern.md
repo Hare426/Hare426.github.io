@@ -13,7 +13,7 @@ date: 2019-12-13 15:49:20
 > 
 
 工程方法模式结构图：
-![工程方法模式结构图.png](/images/back-end/design-pattern/工程方法模式结构图.png)
+![工程方法模式结构图.png](/images/design-pattern/工程方法模式结构图.png)
 
 在工厂方法模式结构图中包含如下几个角色：
 + Product（抽象产品）：它是定义产品的接口，是工厂方法模式所创建对象的超类型，也就是产品对象的公共父类。
@@ -22,7 +22,7 @@ date: 2019-12-13 15:49:20
 + ConcreteFactory（具体工厂）：它是抽象工厂类的子类，实现了抽象工厂中定义的工厂方法，并可由客户端调用，返回一个具体产品类的实例。
 
 例：
-![工程方法模式1.png](/images/back-end/design-pattern/工程方法模式1.png)
+![工程方法模式1.png](/images/design-pattern/工程方法模式1.png)
 
 ```
 //日志记录器接口：抽象产品  
@@ -85,7 +85,7 @@ class Client {
 
 重载的工厂方法：
 
-![重载的工程方法.png](/images/back-end/design-pattern/重载的工程方法.png)
+![重载的工程方法.png](/images/design-pattern/重载的工程方法.png)
 
 ```
 interface LoggerFactory {  
@@ -121,5 +121,5 @@ class DatabaseLoggerFactory implements LoggerFactory {
 ```
 
 工厂方法的隐藏：
-![工厂方法的隐藏.png](/images/back-end/design-pattern/工厂方法的隐藏.png)
+![工厂方法的隐藏.png](/images/design-pattern/工厂方法的隐藏.png)
 

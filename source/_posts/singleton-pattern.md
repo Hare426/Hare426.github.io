@@ -18,14 +18,14 @@ date: 2019-12-16 15:44:20
 > 
 
 单例模式结构图：
-![单例模式结构图.png](/images/back-end/design-pattern/单例模式结构图.png)
+![单例模式结构图.png](/images/design-pattern/单例模式结构图.png)
 
 单例模式结构图中只包含一个单例角色：
 + Singleton（单例）：在单例类的内部实现只生成一个实例，同时它提供一个静态的getInstance()工厂方法，让客户可以访问它的唯一实例；为了防止在外部对其实例化，将其构造函数设计为私有；在单例类内部定义了一个Singleton类型的静态对象，作为外部共享的唯一实例。
 
 
 例：
-![单例模式1.png](/images/back-end/design-pattern/单例模式1.png)
+![单例模式1.png](/images/design-pattern/单例模式1.png)
 
 ```
 import java.util.*;  
@@ -100,7 +100,7 @@ class Client {
 ```
 ##### 饿汉式单例类
 饿汉式单例类结构图：
-![饿汉式单例模式.png](/images/back-end/design-pattern/饿汉式单例模式.png)
+![饿汉式单例模式.png](/images/design-pattern/饿汉式单例模式.png)
 
 ```
 class EagerSingleton {   
@@ -115,7 +115,7 @@ class EagerSingleton {
 
 ##### 懒汉式单例类与线程锁定
 懒汉式单例类结构图：
-![懒汉式单例模式.png](/images/back-end/design-pattern/懒汉式单例模式.png)
+![懒汉式单例模式.png](/images/design-pattern/懒汉式单例模式.png)
 
 ```
 class LazySingleton {   

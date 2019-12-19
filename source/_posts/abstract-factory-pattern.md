@@ -21,7 +21,7 @@ date: 2019-12-13 16:52:20
 > 
 
 抽象工厂模式结构：
-![抽象工厂模式结构.png](/images/back-end/design-pattern/抽象工厂模式结构.png)
+![抽象工厂模式结构.png](/images/design-pattern/抽象工厂模式结构.png)
 
 在抽象工厂模式结构图中包含如下几个角色：
 + AbstractFactory（抽象工厂）：它声明了一组用于创建一族产品的方法，每一个方法对应一种产品。
@@ -30,7 +30,7 @@ date: 2019-12-13 16:52:20
 + ConcreteProduct（具体产品）：它定义具体工厂生产的具体产品对象，实现抽象产品接口中声明的业务方法。
 
 例：
-![抽象工厂模式1.png](/images/back-end/design-pattern/抽象工厂模式1.png)
+![抽象工厂模式1.png](/images/design-pattern/抽象工厂模式1.png)
 
 ```
 //按钮接口：抽象产品  
