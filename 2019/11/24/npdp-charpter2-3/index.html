@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>NPDP_Chapter2_组合管理_3 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">NPDP_Chapter2_组合管理_3</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十一月 24, 2019&nbsp;&nbsp;20:44:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/NPDP/">NPDP</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="第二章-组合管理"><a href="#第二章-组合管理" class="headerlink" title="第二章 组合管理"></a>第二章 组合管理</h3><h4 id="2-3-新产品机会的选择"><a href="#2-3-新产品机会的选择" class="headerlink" title="2.3 新产品机会的选择"></a>2.3 新产品机会的选择</h4><p>组织应不断寻找新产品机会。<br>新产品机会来自：</p>
+<ul>
+<li>分析当前产品组合，确定产品改进或产品延伸的领域（BCG矩阵）；</li>
+<li>创意生成或创造性思维工具；</li>
+</ul>
+<h5 id="产品机会评估"><a href="#产品机会评估" class="headerlink" title="产品机会评估"></a>产品机会评估</h5><p>顶尖公司中采用组合管理方法的比例明显高于其他公司。各种项目评估工具的使用比例如下图。</p>
+<blockquote>
+<p>从广义上讲，评估和筛选新产品机会的工具可以分为两大类——非财务类和财务类；</p>
+</blockquote>
+<p><img src="/images/npdp/chapter2/%E9%A1%B9%E7%9B%AE%E8%AF%84%E4%BC%B0%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8.png" alt="项目评估工具使用.png"></p>
+<hr>
+<h5 id="2-3-1-非财务类评估"><a href="#2-3-1-非财务类评估" class="headerlink" title="2.3.1 非财务类评估"></a>2.3.1 非财务类评估</h5><p>根据定义，非财务类方法或评分方法依据的是主观判定。以评分方法为组合管理工具的组织取得了显著成功。</p>
+<blockquote>
+<p>近些年来，许多研究调查了促成新产品成功的因素，其中一部分较为关键的成功因素是：</p>
+<ul>
+<li>拥有一个独特的、优越的产品。该产品有别于竞争对手的产品，能够为客户提供独特利益和卓越价值。</li>
+<li>瞄准一个吸引人的市场——不断增长的大型市场。该市场的利润率高，竞争不激烈，竞争阻力较小。</li>
+<li>利用组织内部的优势——产品和项目。这些产品和项目的基础是组织在营销和技术方面的优势、能力以及经验。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>评估标准还包括：</p>
+<ul>
+<li>战略一致性；</li>
+<li>产品优势；</li>
+<li>风险水平；</li>
+<li>法律法规影响；</li>
+<li>上市时间；</li>
+</ul>
+</blockquote>
+<p><strong>通过/失败方法</strong><br><img src="/images/npdp/chapter2/%E9%80%9A%E8%BF%87-%E5%A4%B1%E8%B4%A5%E6%96%B9%E6%B3%95.png" alt="通过-失败方法.png"></p>
+<p><strong>评分方法</strong><br>通常在通过/失败方法之后进行。</p>
+<p>评估过程：</p>
+<ul>
+<li>制定评估准则，对每个评估准则赋予权重，以显示其相对重要性。</li>
+<li>按照每个评估准则对产品创意逐一进行10分制打分，计算出每个产品创意的加权分数，得出所有产品创意排序。</li>
+<li>为确保评分方法的客观性，在打分制度上为每一个分数提供参考性的描述。</li>
+</ul>
+<p><img src="/images/npdp/chapter2/%E8%AF%84%E5%88%86%E6%96%B9%E6%B3%95.png" alt="评分方法.png"></p>
+<hr>
+<h5 id="2-3-2-财务类评估"><a href="#2-3-2-财务类评估" class="headerlink" title="2.3.2 财务类评估"></a>2.3.2 财务类评估</h5><p>在产品组合选择和持续性管理的情景下，财务类评估有以下两种用途：</p>
+<ul>
+<li>决定新产品在财务上是否可行——它是否有可能提供一个令人满意的投资回报率；</li>
+<li>决定项目的优先级，此时财务类评估被视为组合选择或持续性组合管理过程的一部分；</li>
+</ul>
+<p>进行一次详细的财务分析所需的信息：</p>
+<ul>
+<li>利益或回报。来自销售数量和价格；</li>
+<li>成本。基于制造和营销成本；</li>
+<li>资金成本。与投资建筑物、厂房及设备相关的成本；</li>
+</ul>
+<p><img src="/images/npdp/chapter2/%E8%B4%A2%E5%8A%A1%E5%88%86%E6%9E%90%E6%A1%86%E6%9E%B6.png" alt="财务分析框架.png"></p>
+<p>以下指标被用于确定累计净值（返回成本）与项目成本（资金成本）的相对值：</p>
+<ul>
+<li>净现值——Net Present Value（NPV）；</li>
+<li>内部收益率——Internal Rate of Return（IRR）；</li>
+<li>投资回报率——Return on Investment（RoI）；</li>
+<li>投资回收期——Payback Period</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/NPDP/"># NPDP</a>
+                    
+                        <a href="/tags/%E7%BB%84%E5%90%88%E7%AE%A1%E7%90%86/"># 组合管理</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/11/24/npdp-charpter2-4/">NPDP_Chapter2_组合管理_4</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/10/JsonString-to-HashMap/">JSONString To HashMap</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

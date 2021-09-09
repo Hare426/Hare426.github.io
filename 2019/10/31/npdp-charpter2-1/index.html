@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>NPDP_Chapter2_组合管理_1 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">NPDP_Chapter2_组合管理_1</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十月 31, 2019&nbsp;&nbsp;22:09:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/NPDP/">NPDP</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="第二章-组合管理"><a href="#第二章-组合管理" class="headerlink" title="第二章 组合管理"></a>第二章 组合管理</h3><p>建立并维持现有项目与新产品开发项目间的平衡，使其与经营战略和创新战略协调一致；<br>基于创新战略的组合管理是一个重要工具，它确保了产品开发和产品管理项目的正确优先顺序和平衡关系；</p>
+<hr>
+<h4 id="2-1-什么是产品组合"><a href="#2-1-什么是产品组合" class="headerlink" title="2.1 什么是产品组合"></a>2.1 什么是产品组合</h4><blockquote>
+<p>定义：一个组织正在投资的并将对其做出策略性权衡取舍的一系列项目或产品</p>
+</blockquote>
+<h5 id="什么是组合管理？"><a href="#什么是组合管理？" class="headerlink" title="什么是组合管理？"></a>什么是组合管理？</h5><blockquote>
+<p>（产品）组合是以组合形式被管理的一系列程序、项目和/操作的合集。一个组合的构成元素未必是相互依赖的，甚至未必是相关的，但它们被集合成一个组合，以此为单位接受管理，以实现战略目标</p>
+</blockquote>
+<blockquote>
+<p>在产品开发和产品管理中，“企业可以通过两种途径实现新产品成功：正确的完成项目，完成正确的项目。组合管理将是的是完成正确的项目。”</p>
+</blockquote>
+<blockquote>
+<p>组合管理中的五大目标：</p>
+<ul>
+<li>价值最大化：通过资源分配最大化组合价值（各个项目的商业价值之和）。</li>
+<li>项目平衡：基于预先设定的决策准则，维持正确项目间的恰当平衡，这些准则包括长期与短期平衡、高风险与低风险平衡、具体项目与市场类别平衡。</li>
+<li>战略协同：确保组织整体战略与经营战略及创新战略始终保持一致。</li>
+<li>管道平衡：确保资源和焦点不会过于分散，多数公司在产品组合中往往囊括了太多项目。应确定正确的项目数量，以达到管道资源需求和可用资源之间的最佳平衡。</li>
+<li>财务稳健：确保产品组合中所选项目能够实现产品创新战略中所设定的财务目标。</li>
+</ul>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;产品组合通常被认为是两个独立的活动——组合选择和组合审查——所构成。事实上，这两个活动是不能被单独划分开的。新产品与现有产品，以及新产品与其他潜在新产品之间的竞争始终存在。<strong>组合管理应当是一个持续的过程，即一个不间断的评估产品组合的过程，无论考察的是现有产品，新产品、产品改进、维护和支持还是研发。在这一过程中，应当根据战略目标进行组合调整，从而最大限度的提高投资回报率。</strong> </p>
+<blockquote>
+<p>组合管理的主要特征有：</p>
+<ul>
+<li>是处于动态环境中的决策过程，需要持续不断的审查；</li>
+<li>项目处于不同的完成阶段；</li>
+<li>涉及未来事件，因此无法确保成功。组合管理是用来提高整个项目或产品的成功可能性的；</li>
+<li>产品开发和产品管理的资源是有限的，通常要与其他业务功能共享。为了获得最大回报，组织需要对这些资源进行分配。依照组织的整体目标和创新战略分配资源，是权衡取舍成功的基础。</li>
+</ul>
+</blockquote>
+<h5 id="组合中的项目类型"><a href="#组合中的项目类型" class="headerlink" title="组合中的项目类型"></a>组合中的项目类型</h5><ul>
+<li>突破性项目（激进或颠覆式项目）——通过新技术向市场引入崭新产品的项目，与组织的现有项目有明显不同，且风险水平较高；</li>
+<li>平台型项目——开发出一系列子系统及其接口，由此建立一个通用框架，继而高效的开发、制造出其他延伸产品。基于该通用框架，一系列延伸产品得以被开发和生产。这类项目的风险通常比产品改进或渐进式改进的风险更大，但比突破性项目的开发风险要小；</li>
+<li>衍生项目——由现有产品或平台衍生出的项目。它们可以弥补现有产品线的不足，建立具有成本优势的制造能力；或者基于组织的核心技术提升性能和引入新特性。通常风险较低；</li>
+<li>支持性项目——对现有项目渐进式改进，或提升现有产品的制造效率。通常风险水平较低；</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/NPDP/"># NPDP</a>
+                    
+                        <a href="/tags/%E7%BB%84%E5%90%88%E7%AE%A1%E7%90%86/"># 组合管理</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/11/03/npdp-charpter2-2/">NPDP_Chapter2_组合管理_2</a>
+            
+            
+            <a class="next" rel="next" href="/2019/10/27/npdp-chapter1-6/">NPDP_Chapter1_新产品开发战略_6</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

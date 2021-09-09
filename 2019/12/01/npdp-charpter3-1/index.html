@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>NPDP_Chapter3_新产品流程_1 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">NPDP_Chapter3_新产品流程_1</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 1, 2019&nbsp;&nbsp;23:56:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/NPDP/">NPDP</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="第三章-新产品流程"><a href="#第三章-新产品流程" class="headerlink" title="第三章 新产品流程"></a>第三章 新产品流程</h2><blockquote>
+<p><strong>新产品流程</strong>：经组织理解认可的开发新产品或改进现有产品的途径。</p>
+</blockquote>
+<h3 id="3-1-产品开发：一个“风险与回报”的过程"><a href="#3-1-产品开发：一个“风险与回报”的过程" class="headerlink" title="3.1 产品开发：一个“风险与回报”的过程"></a>3.1 产品开发：一个“风险与回报”的过程</h3><blockquote>
+<p>产品开发过程大致等同于一个“风险管理”的赌局（库珀），赌局的规则是：</p>
+<ul>
+<li>如果不确定性高，则赌注下的少些；</li>
+<li>随着不确定性的降低，赌注增加；</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>调查表明，开发实践和流程是成功率提升的基础。</p>
+</blockquote>
+<h4 id="管控新产品失败风险"><a href="#管控新产品失败风险" class="headerlink" title="管控新产品失败风险"></a>管控新产品失败风险</h4><p>在整个产品开发流程中，随着产品开发往前推进，累计成本大幅增加。产品开发者面对的挑战是，如何确保随着成本增加，产品失败（不确定性水平）的风险下降。</p>
+<blockquote>
+<p>新产品开发的累计成本：</p>
+</blockquote>
+<p><img src="/images/npdp/chapter3/%E6%96%B0%E4%BA%A7%E5%93%81%E5%BC%80%E5%8F%91%E7%9A%84%E7%B4%AF%E8%AE%A1%E6%88%90%E6%9C%AC.png" alt="新产品开发的累计成本.png"></p>
+<blockquote>
+<p>风险随成本增加而下降</p>
+</blockquote>
+<p><img src="/images/npdp/chapter3/%E9%A3%8E%E9%99%A9%E9%9A%8F%E6%88%90%E6%9C%AC%E5%A2%9E%E5%8A%A0%E8%80%8C%E4%B8%8B%E9%99%8D.png" alt="风险随成本增加而下降.png"></p>
+<h4 id="知识能够改进决策，降低不确定性"><a href="#知识能够改进决策，降低不确定性" class="headerlink" title="知识能够改进决策，降低不确定性"></a>知识能够改进决策，降低不确定性</h4><blockquote>
+<p>决策来自知识、信息和数据。</p>
+</blockquote>
+<blockquote>
+<p>标准的决策框架：</p>
+</blockquote>
+<p><img src="/images/npdp/chapter3/%E6%A0%87%E5%87%86%E7%9A%84%E5%86%B3%E7%AD%96%E6%A1%86%E6%9E%B6.png" alt="标准的决策框架.png"></p>
+<p>做出正确决策所需的知识、信息和数据的来源：</p>
+<ul>
+<li>组织记录；</li>
+<li>组织员工；</li>
+<li>外部顾问；</li>
+<li>发表的文献；</li>
+<li>专利；</li>
+<li>竞争对手</li>
+<li>客户</li>
+<li>…</li>
+</ul>
+<h4 id="产品开发流程中“前端”的重要性"><a href="#产品开发流程中“前端”的重要性" class="headerlink" title="产品开发流程中“前端”的重要性"></a>产品开发流程中“前端”的重要性</h4><blockquote>
+<p>产品开发项目的前端是一个早期阶段的起点。在进入正式的产品开发流程之前，组织在该阶段识别机会，形成概念。该阶段包括<strong>创意生成阶段</strong>、<strong>初始概念发展阶段</strong>、<strong>高级业务阶段</strong>。</p>
+</blockquote>
+<blockquote>
+<p>一些文献将其称为“模糊前端”，主要是因为他是项目中定义最不明确的一个阶段。</p>
+</blockquote>
+<blockquote>
+<p>“模糊前端”使得在相对较低成本下，组织有机会较为清晰的探索新产品的潜力。在这个早期阶段，明智的决策能够显著的减少不确定性，并为持续投资该项目提供信心。</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/NPDP/"># NPDP</a>
+                    
+                        <a href="/tags/%E6%96%B0%E4%BA%A7%E5%93%81%E6%B5%81%E7%A8%8B/"># 新产品流程</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/09/java-regular-expression/">Java正则表达式</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/29/npdp-charpter2-6/">NPDP_Chapter2_组合管理_6</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>NPDP_Chapter2_组合管理_5 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">NPDP_Chapter2_组合管理_5</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十一月 28, 2019&nbsp;&nbsp;23:48:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/NPDP/">NPDP</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="第二章-组合管理"><a href="#第二章-组合管理" class="headerlink" title="第二章 组合管理"></a>第二章 组合管理</h3><h4 id="2-5-资源配置"><a href="#2-5-资源配置" class="headerlink" title="2.5 资源配置"></a>2.5 资源配置</h4><p>组合管理中的一项重要任务就是进行资源配置；</p>
+<blockquote>
+<p>新产品开发的成功率与持续性产品管理的有效性受限于以下因素：</p>
+<ul>
+<li>同时段内进行的项目太多；</li>
+<li>项目计划糟糕，任务执行能力太差；</li>
+<li>产品开发项目与其他业务优先级之争；</li>
+<li>上市延期，按时完成的难度极大；</li>
+<li>新产品开发项目可能与其他业务单元在优先级上存在竞争关系；</li>
+<li>在最后关头赶出的任务却被搁置在下游流程；</li>
+<li>任务的优先级不断变化，导致资源配置随之变化；</li>
+<li>缺乏完善的辅助支持，如材料、供应商、工程支持；</li>
+<li>管理者陷入困境，无法施救项目；<br>以上情况常常导致上市延迟、错失机会，因特性和功能不足而出现产品拒收的情况。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>资源配置是一个相对复杂的过程，它不仅仅是单个问题的叠加。资源配置要求在正确的时段，为项目配置具备正确技能的正确个体。</p>
+</blockquote>
+<p>恰当的资源配置的好处：</p>
+<ul>
+<li>项目流程更好（更少的项目延迟）；</li>
+<li>输出更多（更多的上市产品）；</li>
+<li>员工满意度较高；</li>
+<li>能实现有效的组合管理；</li>
+</ul>
+<p>创新战略的一个关键元素是能力规划，即内部能力和外部能力与创新目标和创新战略相匹配。引入基于创新战略的组合选择标准，为资源配置提供了切实的执行依据。</p>
+<h5 id="资源配置的方法"><a href="#资源配置的方法" class="headerlink" title="资源配置的方法"></a>资源配置的方法</h5><blockquote>
+<p>资源配置的两个基本原则：</p>
+<ul>
+<li>项目资源需求；</li>
+<li>新产品目标；</li>
+</ul>
+</blockquote>
+<p><strong>1. 基于项目资源的需求</strong></p>
+<ul>
+<li>按现有项目清单的优先级（由评分模型或某种财务分析方法得出），从优到次逐个考察；</li>
+<li>为每个项目制定详细的计划，可使用项目管理软件包，如微软开发的Project软件；</li>
+<li>在项目计划中，根据特定的类别（工程师、设计师、制造商等）分配资源；</li>
+<li>按照时间阶段，确定每个类别的累积资源需求；</li>
+<li>基于资源的可获得性，匹配每个类别的资源需求和时间要求；</li>
+<li>识别资源过载的部分，随后重新排列项目的优先顺序，或者从项目组合中删掉一些项目。也可以选择增加资源，如雇佣更多的人或外包；</li>
+</ul>
+<p><strong>2. 基于新产品目标</strong></p>
+<ul>
+<li>从新产品目标开始——“希望从新产品中获得多少回报或利润？”</li>
+<li>计算组合中每个备选新产品的潜在回报或利润，可使用财务分析方法，如EVA或DCF（第五章详解）；</li>
+<li>基于业务单元目标，对项目及其潜在回报排序，选择出累计财务回报能满足业务单元目标的项目；</li>
+<li>按照上述方法1对各个项目同样进行规划，根据资源可获得性按时间阶段确定资源需求；</li>
+</ul>
+<p><strong>3. 将资源配置作为一个业务流程</strong></p>
+<ul>
+<li>若不了解资源供应和项目需求，则无法展开资源规划过程；<blockquote>
+<p>在资源配置过程中，有4个重要角色：</p>
+<ul>
+<li>项目经理：承担完成项目要求的责任，向资源主管汇报；</li>
+<li>资源主管：将项目转化为FTE要求，并将他们分配到项目中；</li>
+<li>资源规划负责人：每月与项目经理和资源主管会面一次，讨论资源配置的优化和组合假设情景分析；</li>
+<li>项目规划负责人：每月与资源规划负责人会面一次，讨论如何调整资源与实现资源的优化利用，每季度参加一次“组合假设情景分析”；</li>
+</ul>
+</blockquote>
+<img src="/images/npdp/chapter2/%E8%B5%84%E6%BA%90%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B.png" alt="资源配置过程.png"></li>
+</ul>
+<p><strong>4. 资源配置的支持工具</strong></p>
+<ul>
+<li>在图1中，“需求输入表单”列举了所有项目团队的“需求”。资源所有者在“资源输入表单”上标出可供端对使用的“可供资源”；</li>
+<li>在图2中，显示了资源缺口会在何时何处发生；</li>
+</ul>
+<p><img src="/images/npdp/chapter2/%E8%B5%84%E6%BA%90%E9%85%8D%E7%BD%AE%E7%9A%84%E6%94%AF%E6%8C%81%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8.png" alt="资源配置的支持工具使用.png"></p>
+<p><img src="/images/npdp/chapter2/%E8%B5%84%E6%BA%90%E9%9C%80%E6%B1%82%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%83%85%E5%86%B5.png" alt="资源需求与配置情况.png"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/NPDP/"># NPDP</a>
+                    
+                        <a href="/tags/%E7%BB%84%E5%90%88%E7%AE%A1%E7%90%86/"># 组合管理</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/11/29/npdp-charpter2-6/">NPDP_Chapter2_组合管理_6</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/27/mysql/">mysql常见问题处理</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

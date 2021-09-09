@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>设计模式-适配器模式 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">设计模式-适配器模式</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 19, 2019&nbsp;&nbsp;15:44:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Design-pattern/">Design-pattern</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h4><p>定义：</p>
+<blockquote>
+<p>将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。<br>适配器模式既可以作为类结构型模式，也可以作为对象结构型模式。</p>
+</blockquote>
+<p>注：在适配器模式定义中所提及的接口是指广义的接口，它可以表示一个方法或者方法的集合。</p>
+<p>根据适配器类与适配者类的关系不同，适配器模式可分为<em><strong>对象适配器</strong></em>和<em><strong>类适配器</strong></em>两种，在对象适配器模式中，适配器与适配者之间是关联关系；在类适配器模式中，适配器与适配者之间是继承（或实现）关系。</p>
+<h5 id="对象适配器模式"><a href="#对象适配器模式" class="headerlink" title="对象适配器模式"></a>对象适配器模式</h5><p>对象适配器模式结构图：<br><img src="/images/design-pattern/%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="对象适配器模式结构图.png"></p>
+<p>在对象适配器模式结构图中包含如下几个角色：</p>
+<ul>
+<li>Target（目标抽象类）：目标抽象类定义客户所需接口，可以是一个抽象类或接口，也可以是具体类。</li>
+<li>Adapter（适配器类）：适配器可以调用另一个接口，作为一个转换器，对Adaptee和Target进行适配，适配器类是适配器模式的核心，在对象适配器中，它通过继承Target并关联一个Adaptee对象使二者产生联系。</li>
+<li>Adaptee（适配者类）：适配者即被适配的角色，它定义了一个已经存在的接口，这个接口需要适配，适配者类一般是一个具体类，包含了客户希望使用的业务方法，在某些情况下可能没有适配者类的源代码。</li>
+</ul>
+<p>例：<br><img src="/images/design-pattern/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F1.png" alt="适配器模式1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">//抽象成绩操作类：目标接口  </span><br><span class="line">interface ScoreOperation &#123;  </span><br><span class="line">    public int[] sort(int array[]); //成绩排序  </span><br><span class="line">    public int search(int array[],int key); //成绩查找  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//快速排序类：适配者  </span><br><span class="line">class QuickSort &#123;  </span><br><span class="line">    public int[] quickSort(int array[]) &#123;  </span><br><span class="line">        sort(array,0,array.length-1);  </span><br><span class="line">        return array;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void sort(int array[],int p, int r) &#123;  </span><br><span class="line">        int q=0;  </span><br><span class="line">        if(p&lt;r) &#123;  </span><br><span class="line">            q=partition(array,p,r);  </span><br><span class="line">            sort(array,p,q-1);  </span><br><span class="line">            sort(array,q+1,r);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public int partition(int[] a, int p, int r) &#123;  </span><br><span class="line">        int x=a[r];  </span><br><span class="line">        int j=p-1;  </span><br><span class="line">        for (int i=p;i&lt;=r-1;i++) &#123;  </span><br><span class="line">            if (a[i]&lt;=x) &#123;  </span><br><span class="line">                j++;  </span><br><span class="line">                swap(a,j,i);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        swap(a,j+1,r);  </span><br><span class="line">        return j+1;   </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void swap(int[] a, int i, int j) &#123;     </span><br><span class="line">        int t = a[i];     </span><br><span class="line">        a[i] = a[j];     </span><br><span class="line">        a[j] = t;     </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//二分查找类：适配者  </span><br><span class="line">class BinarySearch &#123;  </span><br><span class="line">    public int binarySearch(int array[],int key) &#123;  </span><br><span class="line">        int low = 0;  </span><br><span class="line">        int high = array.length -1;  </span><br><span class="line">        while(low &lt;= high) &#123;  </span><br><span class="line">            int mid = (low + high) / 2;  </span><br><span class="line">            int midVal = array[mid];  </span><br><span class="line">            if(midVal &lt; key) &#123;    </span><br><span class="line">low = mid +1;    </span><br><span class="line">&#125;  </span><br><span class="line">            else if (midVal &gt; key) &#123;    </span><br><span class="line">high = mid -1;    </span><br><span class="line">&#125;  </span><br><span class="line">            else &#123;    </span><br><span class="line">return 1; //找到元素返回1    </span><br><span class="line">&#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        return -1;  //未找到元素返回-1  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//操作适配器：适配器  </span><br><span class="line">class OperationAdapter implements ScoreOperation &#123;  </span><br><span class="line">    private QuickSort sortObj; //定义适配者QuickSort对象  </span><br><span class="line">    private BinarySearch searchObj; //定义适配者BinarySearch对象  </span><br><span class="line"></span><br><span class="line">    public OperationAdapter() &#123;  </span><br><span class="line">        sortObj = new QuickSort();  </span><br><span class="line">        searchObj = new BinarySearch();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public int[] sort(int array[]) &#123;    </span><br><span class="line">return sortObj.quickSort(array); //调用适配者类QuickSort的排序方法  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">    public int search(int array[],int key) &#123;    </span><br><span class="line">return searchObj.binarySearch(array,key); //调用适配者类BinarySearch的查找方法  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import javax.xml.parsers.*;  </span><br><span class="line">import org.w3c.dom.*;  </span><br><span class="line">import org.xml.sax.SAXException;  </span><br><span class="line">import java.io.*;  </span><br><span class="line">class XMLUtil &#123;  </span><br><span class="line">//该方法用于从XML配置文件中提取具体类类名，并返回一个实例对象  </span><br><span class="line">    public static Object getBean() &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            //创建文档对象  </span><br><span class="line">            DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();  </span><br><span class="line">            DocumentBuilder builder = dFactory.newDocumentBuilder();  </span><br><span class="line">            Document doc;                             </span><br><span class="line">            doc = builder.parse(new File(&quot;config.xml&quot;));   </span><br><span class="line"></span><br><span class="line">            //获取包含类名的文本节点  </span><br><span class="line">            NodeList nl = doc.getElementsByTagName(&quot;className&quot;);  </span><br><span class="line">            Node classNode=nl.item(0).getFirstChild();  </span><br><span class="line">            String cName=classNode.getNodeValue();  </span><br><span class="line"></span><br><span class="line">            //通过类名生成实例对象并将其返回  </span><br><span class="line">            Class c=Class.forName(cName);  </span><br><span class="line">            Object obj=c.newInstance();  </span><br><span class="line">            return obj;  </span><br><span class="line">        &#125;     </span><br><span class="line">        catch(Exception e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">            return null;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;  </span><br><span class="line">&lt;config&gt;  </span><br><span class="line">    &lt;className&gt;OperationAdapter&lt;/className&gt;  </span><br><span class="line">&lt;/config&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">class Client &#123;  </span><br><span class="line">    public static void main(String args[]) &#123;  </span><br><span class="line">        ScoreOperation operation;  //针对抽象目标接口编程  </span><br><span class="line">        operation = (ScoreOperation)XMLUtil.getBean(); //读取配置文件，反射生成对象  </span><br><span class="line">        int scores[] = &#123;84,76,50,69,90,91,88,96&#125;; //定义成绩数组  </span><br><span class="line">        int result[];  </span><br><span class="line">        int score;  </span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;成绩排序结果：&quot;);  </span><br><span class="line">        result = operation.sort(scores);  </span><br><span class="line"></span><br><span class="line">        //遍历输出成绩  </span><br><span class="line">        for(int i : scores) &#123;  </span><br><span class="line">            System.out.print(i + &quot;,&quot;);  </span><br><span class="line">        &#125;  </span><br><span class="line">        System.out.println();  </span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;查找成绩90：&quot;);  </span><br><span class="line">        score = operation.search(result,90);  </span><br><span class="line">        if (score != -1) &#123;  </span><br><span class="line">            System.out.println(&quot;找到成绩90。&quot;);  </span><br><span class="line">        &#125;  </span><br><span class="line">        else &#123;  </span><br><span class="line">            System.out.println(&quot;没有找到成绩90。&quot;);  </span><br><span class="line">        &#125;  </span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;查找成绩92：&quot;);  </span><br><span class="line">        score = operation.search(result,92);  </span><br><span class="line">        if (score != -1) &#123;  </span><br><span class="line">            System.out.println(&quot;找到成绩92。&quot;);  </span><br><span class="line">        &#125;  </span><br><span class="line">        else &#123;  </span><br><span class="line">            System.out.println(&quot;没有找到成绩92。&quot;);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="类适配器"><a href="#类适配器" class="headerlink" title="类适配器"></a>类适配器</h5><p>类适配器模式结构图：<br><img src="/images/design-pattern/%E7%B1%BB%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="类适配器模式结构图.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Adapter extends Adaptee implements Target &#123;  </span><br><span class="line">    public void request() &#123;  </span><br><span class="line">        specificRequest();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于Java、C#等语言不支持多重类继承，因此类适配器的使用受到很多限制，例如如果目标抽象类Target不是接口，而是一个类，就无法使用类适配器；此外，如果适配者Adapter为最终(Final)类，也无法使用类适配器。在Java等面向对象编程语言中，大部分情况下我们使用的是对象适配器，类适配器较少使用。</p>
+<h5 id="双向适配器"><a href="#双向适配器" class="headerlink" title="双向适配器"></a>双向适配器</h5><p>双向适配器结构图：<br><img src="/images/design-pattern/%E5%8F%8C%E5%90%91%E9%80%82%E9%85%8D%E5%99%A8%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="双向适配器结构图.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Adapter implements Target,Adaptee &#123;  </span><br><span class="line">    //同时维持对抽象目标类和适配者的引用  </span><br><span class="line">    private Target target;  </span><br><span class="line">    private Adaptee adaptee;  </span><br><span class="line"></span><br><span class="line">    public Adapter(Target target) &#123;  </span><br><span class="line">        this.target = target;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public Adapter(Adaptee adaptee) &#123;  </span><br><span class="line">        this.adaptee = adaptee;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void request() &#123;  </span><br><span class="line">        adaptee.specificRequest();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void specificRequest() &#123;  </span><br><span class="line">        target.request();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="缺省适配器"><a href="#缺省适配器" class="headerlink" title="缺省适配器"></a>缺省适配器</h5><p>定义：</p>
+<blockquote>
+<p>当不需要实现一个接口所提供的所有方法时，可先设计一个抽象类实现该接口，并为接口中每个方法提供一个默认实现（空方法），那么该抽象类的子类可以选择性地覆盖父类的某些方法来实现需求，它适用于不想使用一个接口中的所有方法的情况，又称为单接口适配器模式。</p>
+</blockquote>
+<p>缺省适配器模式结构图：<br><img src="/images/design-pattern/%E7%BC%BA%E7%9C%81%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="缺省适配器模式结构图.png"></p>
+<p>在缺省适配器模式中，包含如下三个角色：</p>
+<ul>
+<li>ServiceInterface（适配者接口）：它是一个接口，通常在该接口中声明了大量的方法。</li>
+<li>AbstractServiceClass（缺省适配器类）：它是缺省适配器模式的核心类，使用空方法的形式实现了在ServiceInterface接口中声明的方法。通常将它定义为抽象类，因为对它进行实例化没有任何意义。</li>
+<li>ConcreteServiceClass（具体业务类）：它是缺省适配器类的子类，在没有引入适配器之前，它需要实现适配者接口，因此需要实现在适配者接口中定义的所有方法，而对于一些无须使用的方法也不得不提供空实现。在有了缺省适配器之后，可以直接继承该适配器类，根据需要有选择性地覆盖在适配器类中定义的方法。</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"># 设计模式</a>
+                    
+                        <a href="/tags/%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/"># 结构型模式</a>
+                    
+                        <a href="/tags/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"># 适配器模式</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/19/bridge-pattern/">设计模式-桥接模式</a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/18/builder-pattern/">设计模式-建造者模式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>设计模式-抽象工厂模式 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">设计模式-抽象工厂模式</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 13, 2019&nbsp;&nbsp;16:52:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Design-pattern/">Design-pattern</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h4><p>产品等级结构与产品族：</p>
+<blockquote>
+<ul>
+<li>产品等级结构：产品等级结构即产品的继承结构，如一个抽象类是电视机，其子类有海尔电视机、海信电视机、TCL电视机，则抽象电视机与具体品牌的电视机之间构成了一个产品等级结构，抽象电视机是父类，而具体品牌的电视机是其子类。</li>
+<li>产品族：在抽象工厂模式中，产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品，如海尔电器工厂生产的海尔电视机、海尔电冰箱，海尔电视机位于电视机产品等级结构中，海尔电冰箱位于电冰箱产品等级结构中，海尔电视机、海尔电冰箱构成了一个产品族。</li>
+</ul>
+</blockquote>
+<p>抽象工厂模式与工厂方法模式的区别：</p>
+<blockquote>
+<p>工厂方法模式针对的是一个产品等级结构，而抽象工厂模式需要面对多个产品等级结构，一个工厂等级结构可以负责多个不同产品等级结构中的产品对象的创建。</p>
+</blockquote>
+<p>定义：</p>
+<blockquote>
+<p>提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。<br>抽象工厂模式又称为Kit模式，它是一种对象创建型模式。</p>
+</blockquote>
+<p>抽象工厂模式结构：<br><img src="/images/design-pattern/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84.png" alt="抽象工厂模式结构.png"></p>
+<p>在抽象工厂模式结构图中包含如下几个角色：</p>
+<ul>
+<li>AbstractFactory（抽象工厂）：它声明了一组用于创建一族产品的方法，每一个方法对应一种产品。</li>
+<li>ConcreteFactory（具体工厂）：它实现了在抽象工厂中声明的创建产品的方法，生成一组具体产品，这些产品构成了一个产品族，每一个产品都位于某个产品等级结构中。</li>
+<li>AbstractProduct（抽象产品）：它为每种产品声明接口，在抽象产品中声明了产品所具有的业务方法。</li>
+<li>ConcreteProduct（具体产品）：它定义具体工厂生产的具体产品对象，实现抽象产品接口中声明的业务方法。</li>
+</ul>
+<p>例：<br><img src="/images/design-pattern/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F1.png" alt="抽象工厂模式1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">//按钮接口：抽象产品  </span><br><span class="line">interface Button &#123;  </span><br><span class="line">    public void display();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Spring按钮类：具体产品  </span><br><span class="line">class SpringButton implements Button &#123;  </span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示浅绿色按钮。&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Summer按钮类：具体产品  </span><br><span class="line">class SummerButton implements Button &#123;  </span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示浅蓝色按钮。&quot;);  </span><br><span class="line">    &#125;     </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//文本框接口：抽象产品  </span><br><span class="line">interface TextField &#123;  </span><br><span class="line">    public void display();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Spring文本框类：具体产品  </span><br><span class="line">class SpringTextField implements TextField &#123;  </span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示绿色边框文本框。&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Summer文本框类：具体产品  </span><br><span class="line">class SummerTextField implements TextField &#123;  </span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示蓝色边框文本框。&quot;);  </span><br><span class="line">    &#125;     </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//组合框接口：抽象产品  </span><br><span class="line">interface ComboBox &#123;  </span><br><span class="line">    public void display();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Spring组合框类：具体产品  </span><br><span class="line">class SpringComboBox implements ComboBox &#123;  </span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示绿色边框组合框。&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Summer组合框类：具体产品  </span><br><span class="line">class SummerComboBox implements ComboBox &#123;  </span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示蓝色边框组合框。&quot;);  </span><br><span class="line">    &#125;     </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//界面皮肤工厂接口：抽象工厂  </span><br><span class="line">interface SkinFactory &#123;  </span><br><span class="line">    public Button createButton();  </span><br><span class="line">    public TextField createTextField();  </span><br><span class="line">    public ComboBox createComboBox();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Spring皮肤工厂：具体工厂  </span><br><span class="line">class SpringSkinFactory implements SkinFactory &#123;  </span><br><span class="line">    public Button createButton() &#123;  </span><br><span class="line">        return new SpringButton();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public TextField createTextField() &#123;  </span><br><span class="line">        return new SpringTextField();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public ComboBox createComboBox() &#123;  </span><br><span class="line">        return new SpringComboBox();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Summer皮肤工厂：具体工厂  </span><br><span class="line">class SummerSkinFactory implements SkinFactory &#123;  </span><br><span class="line">    public Button createButton() &#123;  </span><br><span class="line">        return new SummerButton();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public TextField createTextField() &#123;  </span><br><span class="line">        return new SummerTextField();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public ComboBox createComboBox() &#123;  </span><br><span class="line">        return new SummerComboBox();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import javax.xml.parsers.*;  </span><br><span class="line">import org.w3c.dom.*;  </span><br><span class="line">import org.xml.sax.SAXException;  </span><br><span class="line">import java.io.*;  </span><br><span class="line"></span><br><span class="line">public class XMLUtil &#123;  </span><br><span class="line">//该方法用于从XML配置文件中提取具体类类名，并返回一个实例对象  </span><br><span class="line">    public static Object getBean() &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            //创建文档对象  </span><br><span class="line">            DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();  </span><br><span class="line">            DocumentBuilder builder = dFactory.newDocumentBuilder();  </span><br><span class="line">            Document doc;                             </span><br><span class="line">            doc = builder.parse(new File(&quot;config.xml&quot;));   </span><br><span class="line"></span><br><span class="line">            //获取包含类名的文本节点  </span><br><span class="line">            NodeList nl = doc.getElementsByTagName(&quot;className&quot;);  </span><br><span class="line">            Node classNode=nl.item(0).getFirstChild();  </span><br><span class="line">            String cName=classNode.getNodeValue();  </span><br><span class="line"></span><br><span class="line">            //通过类名生成实例对象并将其返回  </span><br><span class="line">            Class c=Class.forName(cName);  </span><br><span class="line">            Object obj=c.newInstance();  </span><br><span class="line">            return obj;  </span><br><span class="line">        &#125;     </span><br><span class="line">        catch(Exception e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">            return null;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;  </span><br><span class="line">&lt;config&gt;  </span><br><span class="line">    &lt;className&gt;SpringSkinFactory&lt;/className&gt;  </span><br><span class="line">&lt;/config&gt;  </span><br><span class="line">       编写如下客户端测试代码：</span><br><span class="line">[java] view plain copy</span><br><span class="line">class Client &#123;  </span><br><span class="line">    public static void main(String args[]) &#123;  </span><br><span class="line">        //使用抽象层定义  </span><br><span class="line">        SkinFactory factory;  </span><br><span class="line">        Button bt;  </span><br><span class="line">        TextField tf;  </span><br><span class="line">        ComboBox cb;  </span><br><span class="line">        factory = (SkinFactory)XMLUtil.getBean();  </span><br><span class="line">        bt = factory.createButton();  </span><br><span class="line">        tf = factory.createTextField();  </span><br><span class="line">        cb = factory.createComboBox();  </span><br><span class="line">        bt.display();  </span><br><span class="line">        tf.display();  </span><br><span class="line">        cb.display();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>开闭原则倾斜性：</p>
+<p>在抽象工厂模式中，增加新的产品族很方便，但是增加新的产品等级结构很麻烦，抽象工厂模式的这种性质称为“开闭原则”的倾斜性。“开闭原则”要求系统对扩展开放，对修改封闭，通过扩展达到增强其功能的目的，对于涉及到多个产品族与多个产品等级结构的系统，其功能增强包括两方面：</p>
+<ol>
+<li><p>增加产品族：对于增加新的产品族，抽象工厂模式很好地支持了“开闭原则”，只需要增加具体产品并对应增加一个新的具体工厂，对已有代码无须做任何修改。</p>
+</li>
+<li><p>增加新的产品等级结构：对于增加新的产品等级结构，需要修改所有的工厂角色，包括抽象工厂类，在所有的工厂类中都需要增加生产新产品的方法，违背了“开闭原则”。</p>
+</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"># 设计模式</a>
+                    
+                        <a href="/tags/%E5%88%9B%E9%80%A0%E5%9E%8B%E6%A8%A1%E5%BC%8F/"># 创造型模式</a>
+                    
+                        <a href="/tags/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"># 抽象工厂模式</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/16/singleton-pattern/">设计模式-单例模式</a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/13/factory-method-pattern/">设计模式-工厂方法模式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

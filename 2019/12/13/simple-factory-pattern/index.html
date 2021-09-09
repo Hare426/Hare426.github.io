@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>设计模式-简单工厂模式 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">设计模式-简单工厂模式</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 13, 2019&nbsp;&nbsp;15:29:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Design-pattern/">Design-pattern</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h4><blockquote>
+<p>通常说的工厂模式是指工程方法模式，它也是使用频率最高的工程模式；</p>
+</blockquote>
+<blockquote>
+<p>简单工程模式不属于GoF23种设计模式，将它作为学习其他工厂模式的入门；</p>
+</blockquote>
+<p>定义：</p>
+<blockquote>
+<p>定义一个工厂类，它可以根据参数的不同返回不同类的实例，被创建的实例通常都具有共同的父类。因为在简单工厂模式中用于创建实例的方法是 静态(static)方法，因此简单工厂模式又被称为静态工厂方法(Static Factory Method)模式，它属于类创建型模式。</p>
+</blockquote>
+<p>简单工程模式结构图：<br><img src="/images/design-pattern/%E7%AE%80%E5%8D%95%E5%B7%A5%E7%A8%8B%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="简单工程模式结构图.png"></p>
+<p>简单工厂模式结构图中包含如下几种角色：</p>
+<ul>
+<li>Factory（工厂角色）：工厂角色即工厂类，它是简单工厂模式的核心，负责实现创建所有产品实例的内部逻辑；工厂类可以被外界直接调用，创建所需的产品对象；在工厂类中提供了静态的工厂方法factoryMethod()，它的返回类型为抽象产品类型Product。</li>
+<li>Product（抽象产品角色）：它是工厂类所创建的所有对象的父类，封装了各种产品对象的公有方法，它的引入将提高系统的灵活性，使得在工厂类中只需定义一个通用的工厂方法，因为所有创建的具体产品对象都是其子类对象。</li>
+<li>ConcreteProduct（具体产品角色）：它是简单工厂模式的创建目标，所有被创建的对象都充当这个角色的某个具体类的实例。每一个具体产品角色都继承了抽象产品角色，需要实现在抽象产品中声明的抽象方法。</li>
+</ul>
+<p>例：<br><img src="/images/design-pattern/%E7%AE%80%E5%8D%95%E5%B7%A5%E7%A8%8B%E6%A8%A1%E5%BC%8F1.png" alt="简单工程模式1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">//抽象图表接口：抽象产品类  </span><br><span class="line">interface Chart &#123;  </span><br><span class="line">    public void display();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//柱状图类：具体产品类  </span><br><span class="line">class HistogramChart implements Chart &#123;  </span><br><span class="line">    public HistogramChart() &#123;  </span><br><span class="line">        System.out.println(&quot;创建柱状图！&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示柱状图！&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//饼状图类：具体产品类  </span><br><span class="line">class PieChart implements Chart &#123;  </span><br><span class="line">    public PieChart() &#123;  </span><br><span class="line">        System.out.println(&quot;创建饼状图！&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示饼状图！&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//折线图类：具体产品类  </span><br><span class="line">class LineChart implements Chart &#123;  </span><br><span class="line">    public LineChart() &#123;  </span><br><span class="line">        System.out.println(&quot;创建折线图！&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示折线图！&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//图表工厂类：工厂类  </span><br><span class="line">class ChartFactory &#123;  </span><br><span class="line">    //静态工厂方法  </span><br><span class="line">    public static Chart getChart(String type) &#123;  </span><br><span class="line">        Chart chart = null;  </span><br><span class="line">        if (type.equalsIgnoreCase(&quot;histogram&quot;)) &#123;  </span><br><span class="line">            chart = new HistogramChart();  </span><br><span class="line">            System.out.println(&quot;初始化设置柱状图！&quot;);  </span><br><span class="line">        &#125;  </span><br><span class="line">        else if (type.equalsIgnoreCase(&quot;pie&quot;)) &#123;  </span><br><span class="line">            chart = new PieChart();  </span><br><span class="line">            System.out.println(&quot;初始化设置饼状图！&quot;);  </span><br><span class="line">        &#125;  </span><br><span class="line">        else if (type.equalsIgnoreCase(&quot;line&quot;)) &#123;  </span><br><span class="line">            chart = new LineChart();  </span><br><span class="line">            System.out.println(&quot;初始化设置折线图！&quot;);              </span><br><span class="line">        &#125;  </span><br><span class="line">        return chart;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Client &#123;  </span><br><span class="line">    public static void main(String args[]) &#123;  </span><br><span class="line">        Chart chart;  </span><br><span class="line">        chart = ChartFactory.getChart(&quot;histogram&quot;); //通过静态工厂方法创建产品  </span><br><span class="line">        chart.display();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简单工程模式简化：我们可以将抽象产品类和工厂类合并，将静态工厂方法移至抽象产品类中；<br><img src="/images/design-pattern/%E7%AE%80%E5%8D%95%E5%B7%A5%E7%A8%8B%E6%A8%A1%E5%BC%8F-%E7%AE%80%E5%8C%96.png" alt="简单工程模式-简化.png"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"># 设计模式</a>
+                    
+                        <a href="/tags/%E5%88%9B%E9%80%A0%E5%9E%8B%E6%A8%A1%E5%BC%8F/"># 创造型模式</a>
+                    
+                        <a href="/tags/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"># 简单工厂模式</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/13/factory-method-pattern/">设计模式-工厂方法模式</a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/12/object-oriented-design-principle/">面向对象设计原则</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>Spring 依赖注入 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Spring 依赖注入</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 12, 2019&nbsp;&nbsp;15:52:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Back-end/">Back-end</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="spring-依赖注入"><a href="#spring-依赖注入" class="headerlink" title="spring 依赖注入"></a>spring 依赖注入</h3><h4 id="依赖注入的方式"><a href="#依赖注入的方式" class="headerlink" title="依赖注入的方式"></a>依赖注入的方式</h4><p>依赖注入有3种方式：构造器注入、set注入和注解注入；</p>
+<h5 id="1-构造器注入"><a href="#1-构造器注入" class="headerlink" title="1. 构造器注入"></a>1. 构造器注入</h5><p>构造器注入保证一些必要的属性在Bean实例化时就得到设置，并且确保了Bean实例在实例化后就可以使用。</p>
+<p>使用方式：</p>
+<ol>
+<li>在类中，不用为属性设置setter方法，但是需要生成该类带参的构造方法。</li>
+<li>在配置文件中配置该类的bean，并配置构造器，在配置构造器中用到了<constructor-arg>节点，该节点有四个属性：<ul>
+<li>index：指定注入属性的顺序索引，从0开始；</li>
+<li>type：指该属性所对应的类型；</li>
+<li>ref：引用的依赖对象；</li>
+<li>value：当注入的不是依赖对象，而是基本数据类型时，就用value；</li>
+</ul>
+</li>
+</ol>
+<p>例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class SpringAction &#123;  </span><br><span class="line">    //注入对象springDao  </span><br><span class="line">    private SpringDao springDao;  </span><br><span class="line">    private User user;  </span><br><span class="line">      </span><br><span class="line">    public SpringAction(SpringDao springDao,User user)&#123;  </span><br><span class="line">        this.springDao = springDao;  </span><br><span class="line">        this.user = user;  </span><br><span class="line">        System.out.println(&quot;构造方法调用springDao和user&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">          </span><br><span class="line">    public void save()&#123;  </span><br><span class="line">        user.setName(&quot;hare&quot;);  </span><br><span class="line">        springDao.save(user);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean name=&quot;springAction&quot; class=&quot;com.bless.springdemo.action.SpringAction&quot;&gt;  </span><br><span class="line">    &lt;!--(2)创建构造器注入,如果主类有带参的构造方法则需添加此配置--&gt;  </span><br><span class="line">    &lt;constructor-arg index=&quot;0&quot; ref=&quot;springDao&quot;&gt;&lt;/constructor-arg&gt;  </span><br><span class="line">    &lt;constructor-arg index=&quot;1&quot; ref=&quot;user&quot;&gt;&lt;/constructor-arg&gt;  </span><br><span class="line">&lt;/bean&gt;  </span><br><span class="line">&lt;bean name=&quot;springDao&quot; class=&quot;com.bless.springdemo.dao.impl.SpringDaoImpl&quot;&gt;&lt;/bean&gt;  </span><br><span class="line">&lt;bean name=&quot;user&quot; class=&quot;com.bless.springdemo.vo.User&quot;&gt;&lt;/bean&gt;  </span><br></pre></td></tr></table></figure>
+
+<p>例：<br>联合使用type和index才能确定匹配项和构造参数的入参对应关系；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public Car(String brand, String corp,double price)&#123;</span><br><span class="line">    this.brand=brand;</span><br><span class="line">    this.corp=corp;</span><br><span class="line">    this.price=price;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public Car(String brand, String corp,int maxSpeed)&#123;</span><br><span class="line">    this.brand=brand;</span><br><span class="line">    this.corp=corp;</span><br><span class="line">    this.maxSpeed=maxSpeed;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 构造函数注入(通过入参类型和位置索引确定对应关系) --&gt;</span><br><span class="line">&lt;!-- 对应public Car(String brand, String corp,int maxSpeed)构造函数 --&gt;</span><br><span class="line">&lt;bean id=&quot;car3&quot; class=&quot;com.spring.model.Car&quot;&gt;  </span><br><span class="line">    &lt;constructor-arg index=&quot;0&quot; type=&quot;java.lang.String&quot; value=&quot;奔驰&quot;&gt;&lt;/constructor-arg&gt;</span><br><span class="line">    &lt;constructor-arg index=&quot;1&quot; type=&quot;java.lang.String&quot; value=&quot;中国一汽&quot;&gt;&lt;/constructor-arg&gt;</span><br><span class="line">    &lt;constructor-arg index=&quot;2&quot; type=&quot;int&quot; value=&quot;200&quot;&gt;&lt;/constructor-arg&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-set注入"><a href="#2-set注入" class="headerlink" title="2. set注入"></a>2. set注入</h5><p>set注入要求Bean提供一个默认的构造函数，并为需要注入的属性提供对应的Setter方法。</p>
+<blockquote>
+<ul>
+<li>Spring先调用Bean的默认构造函数实例化Bean对象，然后通过反射的方式调用Setter方法注入属性值;</li>
+<li>如果Bean显示定义了一个带参的构造函数，则需要同时提供一个默认无参的构造函数，否则使用属性注入时将抛出异常;</li>
+</ul>
+</blockquote>
+<p>例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.bless.springdemo.action;  </span><br><span class="line">public class SpringAction &#123;  </span><br><span class="line">    //注入对象springDao  </span><br><span class="line">    private SpringDao springDao;  </span><br><span class="line">    //一定要写被注入对象的set方法  </span><br><span class="line">    public void setSpringDao(SpringDao springDao) &#123;  </span><br><span class="line">        this.springDao = springDao;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    public void ok()&#123;  </span><br><span class="line">        springDao.ok();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--配置bean,配置后该类由spring管理--&gt;  </span><br><span class="line">&lt;bean name=&quot;springAction&quot; class=&quot;com.bless.springdemo.action.SpringAction&quot;&gt;  </span><br><span class="line">    &lt;!--(1)依赖注入,配置当前类中相应的属性--&gt;  </span><br><span class="line">    &lt;property name=&quot;springDao&quot; ref=&quot;springDao&quot;&gt;&lt;/property&gt;  </span><br><span class="line">&lt;/bean&gt;  </span><br><span class="line">　　 &lt;bean name=&quot;springDao&quot; class=&quot;com.bless.springdemo.dao.impl.SpringDaoImpl&quot;&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-注解注入"><a href="#3-注解注入" class="headerlink" title="3. 注解注入"></a>3. 注解注入</h5><p>注解注入其实是使用注解的方式进行构造器注入或者set注入。<br>spring2.5开始提供了基于注解（Annotation-based）的配置，我们可以通过注解的方式来完成注入依赖。在Java代码中可以使用 @Resource或者@Autowired注解方式来经行注入。</p>
+<p>@Resource和@Autowired的区别：</p>
+<ul>
+<li>@Resource默认是按照名称来装配注入的，只有当找不到与名称匹配的bean才会按照类型来装配注入；</li>
+<li>@Autowired默认是按照类型装配注入的，如果想按照名称来转配注入，则需要结合@Qualifier一起使用；</li>
+<li>@Resource注解是由J2EE提供，而@Autowired是由Spring提供；</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package com.bless.springdemo.action;  </span><br><span class="line">public class SpringAction &#123;  </span><br><span class="line">        //注入对象springDao </span><br><span class="line">    @Resource</span><br><span class="line">    private SpringDao springDao;  </span><br><span class="line">        //不需要要写被注入对象的set方法，spring会帮你get/set </span><br><span class="line">       </span><br><span class="line">    public void ok()&#123;  </span><br><span class="line">        springDao.ok();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//&lt;context:annotation-config/&gt; 作用是开启注解;</span><br><span class="line">&lt;context:annotation-config/&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean name=&quot;springAction&quot; class=&quot;com.bless.springdemo.action.SpringAction&quot;&gt;  </span><br><span class="line">        &lt;!--不需要配置属性，@Resource默认按照名称装配注入--&gt;</span><br><span class="line">&lt;/bean&gt;  </span><br><span class="line">&lt;bean name=&quot;springDao&quot; class=&quot;com.bless.springdemo.dao.impl.SpringDaoImpl&quot;&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<p>@Autowired的同理，只不过默认是按照类型装配注入。</p>
+<h5 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h5><p>例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">private User user;</span><br><span class="line">private String school;</span><br><span class="line"></span><br><span class="line">public UserAccountServiceImpl()&#123;</span><br><span class="line">    this.school = user.getSchool();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码执行会报错，因为Java类会先执行构造方法，然后再给注解了@Autowired 的user注入值，所以在执行构造方法的时候，就会报错。</p>
+<p>解决办法是，使用构造器注入，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private User user;</span><br><span class="line">private String school;</span><br><span class="line"></span><br><span class="line">@Autowired</span><br><span class="line">public UserAccountServiceImpl(User user)&#123;</span><br><span class="line">    this.user = user;</span><br><span class="line">    this.school = user.getSchool();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Java/"># Java</a>
+                    
+                        <a href="/tags/Spring/"># Spring</a>
+                    
+                        <a href="/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"># 依赖注入</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/12/object-oriented-design-principle/">面向对象设计原则</a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/12/java-abstract-interface/">Java接口与抽象类</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

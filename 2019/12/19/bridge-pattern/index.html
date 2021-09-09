@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>设计模式-桥接模式 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">设计模式-桥接模式</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 19, 2019&nbsp;&nbsp;17:00:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Design-pattern/">Design-pattern</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h4><p>定义：</p>
+<blockquote>
+<p>将抽象部分与它的实现部分分离，使它们都可以独立地变化。<br>它是一种对象结构型模式，又称为柄体(Handle and Body)模式或接口(Interface)模式。</p>
+</blockquote>
+<p>桥接模式结构图：<br><img src="/images/design-pattern/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="桥接模式结构图.png"></p>
+<p>在桥接模式结构图中包含如下几个角色：</p>
+<ul>
+<li>Abstraction（抽象类）：用于定义抽象类的接口，它一般是抽象类而不是接口，其中定义了一个Implementor（实现类接口）类型的对象并可以维护该对象，它与Implementor之间具有关联关系，它既可以包含抽象业务方法，也可以包含具体业务方法。</li>
+<li>RefinedAbstraction（扩充抽象类）：扩充由Abstraction定义的接口，通常情况下它不再是抽象类而是具体类，它实现了在Abstraction中声明的抽象业务方法，在RefinedAbstraction中可以调用在Implementor中定义的业务方法。</li>
+<li>Implementor（实现类接口）：定义实现类的接口，这个接口不一定要与Abstraction的接口完全一致，事实上这两个接口可以完全不同，一般而言，Implementor接口仅提供基本操作，而Abstraction定义的接口可能会做更多更复杂的操作。Implementor接口对这些基本操作进行了声明，而具体实现交给其子类。通过关联关系，在Abstraction中不仅拥有自己的方法，还可以调用到Implementor中定义的方法，使用关联关系来替代继承关系。</li>
+<li>ConcreteImplementor（具体实现类）：具体实现Implementor接口，在不同的ConcreteImplementor中提供基本操作的不同实现，在程序运行时，ConcreteImplementor对象将替换其父类对象，提供给抽象类具体的业务操作方法。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">interface Implementor &#123;  </span><br><span class="line">    public void operationImpl();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">abstract class Abstraction &#123;  </span><br><span class="line">    protected Implementor impl; //定义实现类接口对象  </span><br><span class="line"></span><br><span class="line">    public void setImpl(Implementor impl) &#123;  </span><br><span class="line">        this.impl=impl;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public abstract void operation();  //声明抽象业务方法  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class RefinedAbstraction extends Abstraction &#123;  </span><br><span class="line">    public void operation() &#123;  </span><br><span class="line">        //业务代码  </span><br><span class="line">        impl.operationImpl();  //调用实现类的方法  </span><br><span class="line">        //业务代码  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例：<br><img src="/images/design-pattern/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F1.png" alt="桥接模式1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">//像素矩阵类：辅助类，各种格式的文件最终都被转化为像素矩阵，不同的操作系统提供不同的方式显示像素矩阵  </span><br><span class="line">class Matrix &#123;  </span><br><span class="line">    //此处代码省略  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//抽象图像类：抽象类  </span><br><span class="line">abstract class Image &#123;  </span><br><span class="line">    protected ImageImp imp;  </span><br><span class="line"></span><br><span class="line">    public void setImageImp(ImageImp imp) &#123;  </span><br><span class="line">        this.imp = imp;  </span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    public abstract void parseFile(String fileName);  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//抽象操作系统实现类：实现类接口  </span><br><span class="line">interface ImageImp &#123;  </span><br><span class="line">    public void doPaint(Matrix m);  //显示像素矩阵m  </span><br><span class="line">&#125;   </span><br><span class="line"></span><br><span class="line">//Windows操作系统实现类：具体实现类  </span><br><span class="line">class WindowsImp implements ImageImp &#123;  </span><br><span class="line">    public void doPaint(Matrix m) &#123;  </span><br><span class="line">        //调用Windows系统的绘制函数绘制像素矩阵  </span><br><span class="line">        System.out.print(&quot;在Windows操作系统中显示图像：&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Linux操作系统实现类：具体实现类  </span><br><span class="line">class LinuxImp implements ImageImp &#123;  </span><br><span class="line">    public void doPaint(Matrix m) &#123;  </span><br><span class="line">        //调用Linux系统的绘制函数绘制像素矩阵  </span><br><span class="line">        System.out.print(&quot;在Linux操作系统中显示图像：&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//Unix操作系统实现类：具体实现类  </span><br><span class="line">class UnixImp implements ImageImp &#123;  </span><br><span class="line">    public void doPaint(Matrix m) &#123;  </span><br><span class="line">        //调用Unix系统的绘制函数绘制像素矩阵  </span><br><span class="line">        System.out.print(&quot;在Unix操作系统中显示图像：&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//JPG格式图像：扩充抽象类  </span><br><span class="line">class JPGImage extends Image &#123;  </span><br><span class="line">    public void parseFile(String fileName) &#123;  </span><br><span class="line">        //模拟解析JPG文件并获得一个像素矩阵对象m;  </span><br><span class="line">        Matrix m = new Matrix();   </span><br><span class="line">        imp.doPaint(m);  </span><br><span class="line">        System.out.println(fileName + &quot;，格式为JPG。&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//PNG格式图像：扩充抽象类  </span><br><span class="line">class PNGImage extends Image &#123;  </span><br><span class="line">    public void parseFile(String fileName) &#123;  </span><br><span class="line">        //模拟解析PNG文件并获得一个像素矩阵对象m;  </span><br><span class="line">        Matrix m = new Matrix();   </span><br><span class="line">        imp.doPaint(m);  </span><br><span class="line">        System.out.println(fileName + &quot;，格式为PNG。&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//BMP格式图像：扩充抽象类  </span><br><span class="line">class BMPImage extends Image &#123;  </span><br><span class="line">    public void parseFile(String fileName) &#123;  </span><br><span class="line">        //模拟解析BMP文件并获得一个像素矩阵对象m;  </span><br><span class="line">        Matrix m = new Matrix();   </span><br><span class="line">        imp.doPaint(m);  </span><br><span class="line">        System.out.println(fileName + &quot;，格式为BMP。&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//GIF格式图像：扩充抽象类  </span><br><span class="line">class GIFImage extends Image &#123;  </span><br><span class="line">    public void parseFile(String fileName) &#123;  </span><br><span class="line">        //模拟解析GIF文件并获得一个像素矩阵对象m;  </span><br><span class="line">        Matrix m = new Matrix();   </span><br><span class="line">        imp.doPaint(m);  </span><br><span class="line">        System.out.println(fileName + &quot;，格式为GIF。&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;  </span><br><span class="line">&lt;config&gt;  </span><br><span class="line">    &lt;!--RefinedAbstraction--&gt;  </span><br><span class="line">    &lt;className&gt;JPGImage&lt;/className&gt;   </span><br><span class="line">    &lt;!--ConcreteImplementor--&gt;  </span><br><span class="line">    &lt;className&gt;WindowsImp&lt;/className&gt;  </span><br><span class="line">&lt;/config&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">import javax.xml.parsers.*;  </span><br><span class="line">import org.w3c.dom.*;  </span><br><span class="line">import org.xml.sax.SAXException;  </span><br><span class="line">import java.io.*;  </span><br><span class="line">public class XMLUtil &#123;  </span><br><span class="line">//该方法用于从XML配置文件中提取具体类类名，并返回一个实例对象  </span><br><span class="line">    public static Object getBean(String args) &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            //创建文档对象  </span><br><span class="line">            DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();  </span><br><span class="line">            DocumentBuilder builder = dFactory.newDocumentBuilder();  </span><br><span class="line">            Document doc;                             </span><br><span class="line">            doc = builder.parse(new File(&quot;config.xml&quot;));   </span><br><span class="line">            NodeList nl=null;  </span><br><span class="line">            Node classNode=null;  </span><br><span class="line">            String cName=null;  </span><br><span class="line">            nl = doc.getElementsByTagName(&quot;className&quot;);  </span><br><span class="line"></span><br><span class="line">            if(args.equals(&quot;image&quot;)) &#123;  </span><br><span class="line">                //获取第一个包含类名的节点，即扩充抽象类  </span><br><span class="line">                classNode=nl.item(0).getFirstChild();  </span><br><span class="line"></span><br><span class="line">            &#125;  </span><br><span class="line">            else if(args.equals(&quot;os&quot;)) &#123;  </span><br><span class="line">               //获取第二个包含类名的节点，即具体实现类  </span><br><span class="line">                classNode=nl.item(1).getFirstChild();  </span><br><span class="line">            &#125;  </span><br><span class="line"></span><br><span class="line">             cName=classNode.getNodeValue();  </span><br><span class="line">             //通过类名生成实例对象并将其返回  </span><br><span class="line">             Class c=Class.forName(cName);  </span><br><span class="line">             Object obj=c.newInstance();  </span><br><span class="line">             return obj;          </span><br><span class="line">           &#125;     </span><br><span class="line">           catch(Exception e) &#123;  </span><br><span class="line">              e.printStackTrace();  </span><br><span class="line">              return null;  </span><br><span class="line">          &#125;  </span><br><span class="line">     &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Client &#123;  </span><br><span class="line">    public static void main(String args[]) &#123;  </span><br><span class="line">        Image image;  </span><br><span class="line">        ImageImp imp;  </span><br><span class="line">        image = (Image)XMLUtil.getBean(&quot;image&quot;);  </span><br><span class="line">        imp = (ImageImp)XMLUtil.getBean(&quot;os&quot;);  </span><br><span class="line">        image.setImageImp(imp);  </span><br><span class="line">        image.parseFile(&quot;小龙女&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="适配器模式与桥连接模式"><a href="#适配器模式与桥连接模式" class="headerlink" title="适配器模式与桥连接模式"></a>适配器模式与桥连接模式</h5><p>例：<br><img src="/images/design-pattern/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E4%B8%8E%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F.png" alt="桥接模式与适配器模式.png"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"># 设计模式</a>
+                    
+                        <a href="/tags/%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/"># 结构型模式</a>
+                    
+                        <a href="/tags/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/"># 桥接模式</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/20/composite-pattern/">设计模式-组合模式</a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/19/adapter-pattern/">设计模式-适配器模式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

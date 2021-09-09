@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>NPDP_Chapter2_组合管理_4 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">NPDP_Chapter2_组合管理_4</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十一月 24, 2019&nbsp;&nbsp;21:43:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/NPDP/">NPDP</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="第二章-组合管理"><a href="#第二章-组合管理" class="headerlink" title="第二章 组合管理"></a>第二章 组合管理</h3><h4 id="2-4-什么是平衡组合"><a href="#2-4-什么是平衡组合" class="headerlink" title="2.4 什么是平衡组合"></a>2.4 什么是平衡组合</h4><p>出于各种各样的原因，主要是为了达到良好的风险与回报的平衡，大多数组织应该尝试在产品组合中加入一系列新产品机会。这些新产品机会的选取范围和比例应当取决于公司整体战略和经营战略，同时也应与创新战略协调一致。</p>
+<p>新产品机会所属的业务单元、产品类别、目标市场、项目或产品的特征，都可以作为新产品机会的分类标准。</p>
+<blockquote>
+<ul>
+<li>突破性项目、衍生项目、平台型项目、支持性项目；</li>
+<li>研发成本、商业化成本；</li>
+<li>潜在的回报或收益；</li>
+<li>风险水平——开发阶段或商业化阶段；</li>
+<li>技术难度——开发或维护；</li>
+<li>上市时间——从决定开发到获得商业回报时间；</li>
+<li>设施设备上的资金投入；</li>
+<li>知识产权的价值创造潜力；</li>
+</ul>
+</blockquote>
+<h5 id="构建平衡组合"><a href="#构建平衡组合" class="headerlink" title="构建平衡组合"></a>构建平衡组合</h5><p>在产品组合的新产品机会权重确定和平衡应符合经营战略和创新战略。</p>
+<ul>
+<li>决定组合的关键构建标准和组合规模；例如，增加高风险产品创意的比例、增添针对新市场的产品机会，或者改变产品改进与新产品（相对组织自身而言）的相对比例；</li>
+<li>通过应用组合的关键构建标准、确定组合规模，使得组合中的产品开发机会达到最佳平衡。如此还能够确保该平衡组合与战略是一致的；</li>
+<li>对组合进行持续管理，确保整个开发管道和产品生命周期中，组合始终处于平衡状态，产品机会选择恰当；</li>
+</ul>
+<p>下图，代表了产品组合在产品和市场新颖性上的分配比例：<br><img src="/images/npdp/chapter2/%E4%BA%A7%E5%93%81%E7%BB%84%E5%90%88%E6%A8%A1%E5%9E%8B%E7%A4%BA%E4%BE%8B.png" alt="产品组合模型示例.png"></p>
+<h5 id="描绘平衡组合"><a href="#描绘平衡组合" class="headerlink" title="描绘平衡组合"></a>描绘平衡组合</h5><p>在开发和展示产品组合时，<em><strong>气泡图</strong></em> 是最常用的图像描绘工具。</p>
+<p>通常，气泡图通过两个维度——x轴和y轴——来描绘项目。x轴和y轴分别代表了一个标准，比如风险和回报。按照项目在x轴和y轴上的评分，确定气泡的位置。气泡的大小则代表了第三个标准，比如所需投入的资金数额或资源份额。</p>
+<p>气泡图组合分析：风险与回报以及资金投入：</p>
+<p><img src="/images/npdp/chapter2/%E6%B0%94%E6%B3%A1%E5%9B%BE-%E9%A3%8E%E9%99%A9%E4%B8%8E%E5%9B%9E%E6%8A%A5%E4%BB%A5%E5%8F%8A%E8%B5%84%E9%87%91%E6%8A%95%E5%85%A5.png" alt="气泡图-风险与回报以及资金投入.png"></p>
+<p>气泡图组合分析：市场风险与技术风险：<br><img src="/images/npdp/chapter2/%E6%B0%94%E6%B3%A1%E5%9B%BE-%E5%B8%82%E5%9C%BA%E9%A3%8E%E9%99%A9%E4%B8%8E%E6%8A%80%E6%9C%AF%E9%A3%8E%E9%99%A9.png" alt="气泡图-市场风险与技术风险.png"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/NPDP/"># NPDP</a>
+                    
+                        <a href="/tags/%E7%BB%84%E5%90%88%E7%AE%A1%E7%90%86/"># 组合管理</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/11/26/browser-message-notification/">浏览器消息提示</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/24/npdp-charpter2-3/">NPDP_Chapter2_组合管理_3</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

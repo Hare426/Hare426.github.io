@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>设计模式-外观模式 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">设计模式-外观模式</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 25, 2019&nbsp;&nbsp;10:09:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Design-pattern/">Design-pattern</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h4><p>定义：</p>
+<blockquote>
+<p>为子系统中的一组接口提供一个统一的入口。外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。<br>外观模式又称为门面模式，它是一种对象结构型模式。</p>
+</blockquote>
+<p>外观模式是迪米特法则的一种具体实现，通过引入一个新的外观角色可以降低原有系统的复杂度，同时降低客户类与子系统的耦合度。</p>
+<p>外观模式结构图：<br><img src="/images/design-pattern/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="外观模式结构图.png"></p>
+<p>外观模式包含如下两个角色：</p>
+<ul>
+<li>Facade（外观角色）：在客户端可以调用它的方法，在外观角色中可以知道相关的（一个或者多个）子系统的功能和责任；在正常情况下，它将所有从客户端发来的请求委派到相应的子系统去，传递给相应的子系统对象处理。</li>
+<li>SubSystem（子系统角色）：在软件系统中可以有一个或者多个子系统角色，每一个子系统可以不是一个单独的类，而是一个类的集合，它实现子系统的功能；每一个子系统都可以被客户端直接调用，或者被外观角色调用，它处理由外观类传过来的请求；子系统并不知道外观的存在，对于子系统而言，外观角色仅仅是另外一个客户端而已。</li>
+</ul>
+<p>例：<br><img src="/images/design-pattern/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F1.png" alt="外观模式1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">//FileReader.cs  </span><br><span class="line">using System;  </span><br><span class="line">using System.Text;  </span><br><span class="line">using System.IO;  </span><br><span class="line"></span><br><span class="line">namespace FacadeSample  </span><br><span class="line">&#123;  </span><br><span class="line">    class FileReader  </span><br><span class="line">    &#123;  </span><br><span class="line">        public string Read(string fileNameSrc)   </span><br><span class="line">        &#123;  </span><br><span class="line">       Console.Write(&quot;读取文件，获取明文：&quot;);  </span><br><span class="line">            FileStream fs = null;  </span><br><span class="line">            StringBuilder sb = new StringBuilder();  </span><br><span class="line">       try  </span><br><span class="line">            &#123;  </span><br><span class="line">                fs = new FileStream(fileNameSrc, FileMode.Open);  </span><br><span class="line">                int data;  </span><br><span class="line">               while((data = fs.ReadByte())!= -1)   </span><br><span class="line">                &#123;  </span><br><span class="line">            sb = sb.Append((char)data);  </span><br><span class="line">               &#125;  </span><br><span class="line">               fs.Close();  </span><br><span class="line">               Console.WriteLine(sb.ToString());  </span><br><span class="line">       &#125;  </span><br><span class="line">       catch(FileNotFoundException e)   </span><br><span class="line">            &#123;  </span><br><span class="line">           Console.WriteLine(&quot;文件不存在！&quot;);  </span><br><span class="line">       &#125;  </span><br><span class="line">       catch(IOException e)   </span><br><span class="line">            &#123;  </span><br><span class="line">           Console.WriteLine(&quot;文件操作错误！&quot;);  </span><br><span class="line">       &#125;  </span><br><span class="line">       return sb.ToString();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">//CipherMachine.cs  </span><br><span class="line">using System;  </span><br><span class="line">using System.Text;  </span><br><span class="line"></span><br><span class="line">namespace FacadeSample  </span><br><span class="line">&#123;  </span><br><span class="line">    class CipherMachine  </span><br><span class="line">    &#123;  </span><br><span class="line">       public string Encrypt(string plainText)   </span><br><span class="line">       &#123;  </span><br><span class="line">       Console.Write(&quot;数据加密，将明文转换为密文：&quot;);  </span><br><span class="line">       string es = &quot;&quot;;  </span><br><span class="line">            char[] chars = plainText.ToCharArray();  </span><br><span class="line">       foreach(char ch in chars)   </span><br><span class="line">            &#123;  </span><br><span class="line">                string c = (ch % 7).ToString();  </span><br><span class="line">           es += c;  </span><br><span class="line">       &#125;  </span><br><span class="line">            Console.WriteLine(es);  </span><br><span class="line">       return es;  </span><br><span class="line">    &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">//FileWriter.cs  </span><br><span class="line">using System;  </span><br><span class="line">using System.IO;  </span><br><span class="line">using System.Text;  </span><br><span class="line"></span><br><span class="line">namespace FacadeSample  </span><br><span class="line">&#123;  </span><br><span class="line">    class FileWriter  </span><br><span class="line">    &#123;  </span><br><span class="line">        public void Write(string encryptStr,string fileNameDes)   </span><br><span class="line">        &#123;  </span><br><span class="line">        Console.WriteLine(&quot;保存密文，写入文件。&quot;);  </span><br><span class="line">            FileStream fs = null;  </span><br><span class="line">        try  </span><br><span class="line">            &#123;  </span><br><span class="line">               fs = new FileStream(fileNameDes, FileMode.Create);  </span><br><span class="line">               byte[] str = Encoding.Default.GetBytes(encryptStr);  </span><br><span class="line">               fs.Write(str,0,str.Length);  </span><br><span class="line">               fs.Flush();  </span><br><span class="line">               fs.Close();  </span><br><span class="line">       &#125;      </span><br><span class="line">       catch(FileNotFoundException e)   </span><br><span class="line">            &#123;  </span><br><span class="line">        Console.WriteLine(&quot;文件不存在！&quot;);  </span><br><span class="line">       &#125;  </span><br><span class="line">       catch(IOException e)   </span><br><span class="line">            &#123;  </span><br><span class="line">                Console.WriteLine(e.Message);  </span><br><span class="line">           Console.WriteLine(&quot;文件操作错误！&quot;);  </span><br><span class="line">       &#125;          </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// EncryptFacade.cs  </span><br><span class="line">namespace FacadeSample  </span><br><span class="line">&#123;  </span><br><span class="line">    class EncryptFacade  </span><br><span class="line">    &#123;  </span><br><span class="line">        //维持对其他对象的引用  </span><br><span class="line">        private FileReader reader;  </span><br><span class="line">        private CipherMachine cipher;  </span><br><span class="line">        private FileWriter writer;  </span><br><span class="line"></span><br><span class="line">        public EncryptFacade()  </span><br><span class="line">        &#123;  </span><br><span class="line">            reader = new FileReader();  </span><br><span class="line">            cipher = new CipherMachine();  </span><br><span class="line">            writer = new FileWriter();  </span><br><span class="line">        &#125;  </span><br><span class="line"></span><br><span class="line">        //调用其他对象的业务方法  </span><br><span class="line">         public void FileEncrypt(string fileNameSrc, string fileNameDes)  </span><br><span class="line">        &#123;  </span><br><span class="line">            string plainStr = reader.Read(fileNameSrc);  </span><br><span class="line">            string encryptStr = cipher.Encrypt(plainStr);  </span><br><span class="line">            writer.Write(encryptStr, fileNameDes);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//Program.cs  </span><br><span class="line">using System;  </span><br><span class="line"></span><br><span class="line">namespace FacadeSample  </span><br><span class="line">&#123;  </span><br><span class="line">    class Program  </span><br><span class="line">    &#123;  </span><br><span class="line">        static void Main(string[] args)  </span><br><span class="line">        &#123;  </span><br><span class="line">            EncryptFacade ef = new EncryptFacade();  </span><br><span class="line">            ef.FileEncrypt(&quot;src.txt&quot;, &quot;des.txt&quot;);  </span><br><span class="line">            Console.Read();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化方案：<br><img src="/images/design-pattern/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F2.png" alt="外观模式2.png"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"># 设计模式</a>
+                    
+                        <a href="/tags/%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/"># 结构型模式</a>
+                    
+                        <a href="/tags/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/"># 外观模式</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/25/flyweight-pattern/">设计模式-享元模式</a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/20/decorator-pattern/">设计模式-装饰模式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

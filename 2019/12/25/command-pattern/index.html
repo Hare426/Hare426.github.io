@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>设计模式-命令模式 | Hare&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Hare426&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Hare426&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">设计模式-命令模式</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Hare</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十二月 25, 2019&nbsp;&nbsp;16:17:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Design-pattern/">Design-pattern</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h4><p>定义：</p>
+<blockquote>
+<p>将一个请求封装为一个对象，从而让我们可用不同的请求对客户进行参数化；对请求排队或者记录请求日志，以及支持可撤销的操作。<br>命令模式是一种对象行为型模式，其别名为动作(Action)模式或事务(Transaction)模式。</p>
+</blockquote>
+<p>命令模式结构图：<br><img src="/images/design-pattern/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="命令模式结构图.png"></p>
+<p>在命令模式结构图中包含如下几个角色：</p>
+<ul>
+<li>Command（抽象命令类）：抽象命令类一般是一个抽象类或接口，在其中声明了用于执行请求的execute()等方法，通过这些方法可以调用请求接收者的相关操作。</li>
+<li>ConcreteCommand（具体命令类）：具体命令类是抽象命令类的子类，实现了在抽象命令类中声明的方法，它对应具体的接收者对象，将接收者对象的动作绑定其中。在实现execute()方法时，将调用接收者对象的相关操作(Action)。</li>
+<li>Invoker（调用者）：调用者即请求发送者，它通过命令对象来执行请求。一个调用者并不需要在设计时确定其接收者，因此它只与抽象命令类之间存在关联关系。在程序运行时可以将一个具体命令对象注入其中，再调用具体命令对象的execute()方法，从而实现间接调用请求接收者的相关操作。</li>
+<li>Receiver（接收者）：接收者执行与请求相关的操作，它具体实现对请求的业务处理。</li>
+</ul>
+<p>例：<br><img src="/images/design-pattern/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F1.png" alt="命令模式1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;  </span><br><span class="line"></span><br><span class="line">//功能键设置窗口类  </span><br><span class="line">class FBSettingWindow &#123;  </span><br><span class="line">    private String title; //窗口标题  </span><br><span class="line">    //定义一个ArrayList来存储所有功能键  </span><br><span class="line">    private ArrayList&lt;FunctionButton&gt; functionButtons = new ArrayList&lt;FunctionButton&gt;();  </span><br><span class="line"></span><br><span class="line">    public FBSettingWindow(String title) &#123;  </span><br><span class="line">        this.title = title;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void setTitle(String title) &#123;  </span><br><span class="line">        this.title = title;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public String getTitle() &#123;  </span><br><span class="line">        return this.title;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void addFunctionButton(FunctionButton fb) &#123;  </span><br><span class="line">        functionButtons.add(fb);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void removeFunctionButton(FunctionButton fb) &#123;  </span><br><span class="line">        functionButtons.remove(fb);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //显示窗口及功能键  </span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示窗口：&quot; + this.title);  </span><br><span class="line">        System.out.println(&quot;显示功能键：&quot;);  </span><br><span class="line">        for (Object obj : functionButtons) &#123;  </span><br><span class="line">            System.out.println(((FunctionButton)obj).getName());  </span><br><span class="line">        &#125;  </span><br><span class="line">        System.out.println(&quot;------------------------------&quot;);  </span><br><span class="line">    &#125;     </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//功能键类：请求发送者  </span><br><span class="line">class FunctionButton &#123;  </span><br><span class="line">    private String name; //功能键名称  </span><br><span class="line">    private Command command; //维持一个抽象命令对象的引用  </span><br><span class="line"></span><br><span class="line">    public FunctionButton(String name) &#123;  </span><br><span class="line">        this.name = name;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public String getName() &#123;  </span><br><span class="line">        return this.name;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //为功能键注入命令  </span><br><span class="line">    public void setCommand(Command command) &#123;  </span><br><span class="line">        this.command = command;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //发送请求的方法  </span><br><span class="line">    public void onClick() &#123;  </span><br><span class="line">        System.out.print(&quot;点击功能键：&quot;);  </span><br><span class="line">        command.execute();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//抽象命令类  </span><br><span class="line">abstract class Command &#123;  </span><br><span class="line">    public abstract void execute();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//帮助命令类：具体命令类  </span><br><span class="line">class HelpCommand extends Command &#123;  </span><br><span class="line">    private HelpHandler hhObj; //维持对请求接收者的引用  </span><br><span class="line"></span><br><span class="line">    public HelpCommand() &#123;  </span><br><span class="line">        hhObj = new HelpHandler();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //命令执行方法，将调用请求接收者的业务方法  </span><br><span class="line">    public void execute() &#123;  </span><br><span class="line">        hhObj.display();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//最小化命令类：具体命令类  </span><br><span class="line">class MinimizeCommand extends Command &#123;  </span><br><span class="line">    private WindowHanlder whObj; //维持对请求接收者的引用  </span><br><span class="line"></span><br><span class="line">    public MinimizeCommand() &#123;  </span><br><span class="line">        whObj = new WindowHanlder();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">//命令执行方法，将调用请求接收者的业务方法  </span><br><span class="line">    public void execute() &#123;  </span><br><span class="line">        whObj.minimize();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//窗口处理类：请求接收者  </span><br><span class="line">class WindowHanlder &#123;  </span><br><span class="line">    public void minimize() &#123;  </span><br><span class="line">        System.out.println(&quot;将窗口最小化至托盘！&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//帮助文档处理类：请求接收者  </span><br><span class="line">class HelpHandler &#123;  </span><br><span class="line">    public void display() &#123;  </span><br><span class="line">        System.out.println(&quot;显示帮助文档！&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">import javax.xml.parsers.*;  </span><br><span class="line">import org.w3c.dom.*;  </span><br><span class="line">import org.xml.sax.SAXException;  </span><br><span class="line">import java.io.*;  </span><br><span class="line"></span><br><span class="line">public class XMLUtil &#123;  </span><br><span class="line">//该方法用于从XML配置文件中提取具体类类名，并返回一个实例对象，可以通过参数的不同返回不同类名节点所对应的实例  </span><br><span class="line">    public static Object getBean(int i) &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            //创建文档对象  </span><br><span class="line">            DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();  </span><br><span class="line">            DocumentBuilder builder = dFactory.newDocumentBuilder();  </span><br><span class="line">            Document doc;                             </span><br><span class="line">            doc = builder.parse(new File(&quot;config.xml&quot;));   </span><br><span class="line"></span><br><span class="line">            //获取包含类名的文本节点  </span><br><span class="line">            NodeList nl = doc.getElementsByTagName(&quot;className&quot;);  </span><br><span class="line">            Node classNode = null;  </span><br><span class="line">            if (0 == i) &#123;  </span><br><span class="line">                classNode = nl.item(0).getFirstChild();  </span><br><span class="line">            &#125;  </span><br><span class="line">            else &#123;  </span><br><span class="line">                classNode = nl.item(1).getFirstChild();  </span><br><span class="line">            &#125;   </span><br><span class="line"></span><br><span class="line">            String cName = classNode.getNodeValue();  </span><br><span class="line"></span><br><span class="line">            //通过类名生成实例对象并将其返回  </span><br><span class="line">            Class c = Class.forName(cName);  </span><br><span class="line">            Object obj = c.newInstance();  </span><br><span class="line">            return obj;  </span><br><span class="line">        &#125;     </span><br><span class="line">        catch(Exception e)&#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">            return null;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;  </span><br><span class="line">&lt;config&gt;  </span><br><span class="line">    &lt;className&gt;HelpCommand&lt;/className&gt;  </span><br><span class="line">    &lt;className&gt;MinimizeCommand&lt;/className&gt;  </span><br><span class="line">&lt;/config&gt;  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class Client &#123;  </span><br><span class="line">    public static void main(String args[]) &#123;  </span><br><span class="line">        FBSettingWindow fbsw = new FBSettingWindow(&quot;功能键设置&quot;);  </span><br><span class="line"></span><br><span class="line">        FunctionButton fb1,fb2;  </span><br><span class="line">        fb1 = new FunctionButton(&quot;功能键1&quot;);  </span><br><span class="line">        fb2 = new FunctionButton(&quot;功能键1&quot;);  </span><br><span class="line"></span><br><span class="line">        Command command1,command2;  </span><br><span class="line">        //通过读取配置文件和反射生成具体命令对象  </span><br><span class="line">        command1 = (Command)XMLUtil.getBean(0);  </span><br><span class="line">        command2 = (Command)XMLUtil.getBean(1);  </span><br><span class="line"></span><br><span class="line">        //将命令对象注入功能键  </span><br><span class="line">        fb1.setCommand(command1);  </span><br><span class="line">        fb2.setCommand(command2);  </span><br><span class="line"></span><br><span class="line">        fbsw.addFunctionButton(fb1);  </span><br><span class="line">        fbsw.addFunctionButton(fb2);  </span><br><span class="line">        fbsw.display();  </span><br><span class="line"></span><br><span class="line">        //调用功能键的业务方法  </span><br><span class="line">        fb1.onClick();  </span><br><span class="line">        fb2.onClick();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="命令队列的实现"><a href="#命令队列的实现" class="headerlink" title="命令队列的实现"></a>命令队列的实现</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;  </span><br><span class="line"></span><br><span class="line">class CommandQueue &#123;  </span><br><span class="line">    //定义一个ArrayList来存储命令队列  </span><br><span class="line">    private ArrayList&lt;Command&gt; commands = new ArrayList&lt;Command&gt;();  </span><br><span class="line"></span><br><span class="line">    public void addCommand(Command command) &#123;  </span><br><span class="line">        commands.add(command);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void removeCommand(Command command) &#123;  </span><br><span class="line">        commands.remove(command);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //循环调用每一个命令对象的execute()方法  </span><br><span class="line">    public void execute() &#123;  </span><br><span class="line">        for (Object command : commands) &#123;  </span><br><span class="line">            ((Command)command).execute();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Invoker &#123;  </span><br><span class="line">    private CommandQueue commandQueue; //维持一个CommandQueue对象的引用  </span><br><span class="line"></span><br><span class="line">    //构造注入  </span><br><span class="line">    public Invoker(CommandQueue commandQueue) &#123;  </span><br><span class="line">        this. commandQueue = commandQueue;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //设值注入  </span><br><span class="line">    public void setCommandQueue(CommandQueue commandQueue) &#123;  </span><br><span class="line">        this.commandQueue = commandQueue;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //调用CommandQueue类的execute()方法  </span><br><span class="line">    public void call() &#123;  </span><br><span class="line">        commandQueue.execute();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="撤销操作的实现"><a href="#撤销操作的实现" class="headerlink" title="撤销操作的实现"></a>撤销操作的实现</h5><p>例：<br><img src="/images/design-pattern/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F2.png" alt="命令模式2.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">//加法类：请求接收者  </span><br><span class="line">class Adder &#123;  </span><br><span class="line">    private int num=0; //定义初始值为0  </span><br><span class="line"></span><br><span class="line">    //加法操作，每次将传入的值与num作加法运算，再将结果返回  </span><br><span class="line">    public int add(int value) &#123;  </span><br><span class="line">        num += value;  </span><br><span class="line">        return num;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//抽象命令类  </span><br><span class="line">abstract class AbstractCommand &#123;  </span><br><span class="line">    public abstract int execute(int value); //声明命令执行方法execute()  </span><br><span class="line">    public abstract int undo(); //声明撤销方法undo()  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//具体命令类  </span><br><span class="line">class ConcreteCommand extends AbstractCommand &#123;  </span><br><span class="line">    private Adder adder = new Adder();  </span><br><span class="line">    private int value;  </span><br><span class="line"></span><br><span class="line">    //实现抽象命令类中声明的execute()方法，调用加法类的加法操作  </span><br><span class="line">public int execute(int value) &#123;  </span><br><span class="line">        this.value=value;  </span><br><span class="line">        return adder.add(value);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //实现抽象命令类中声明的undo()方法，通过加一个相反数来实现加法的逆向操作  </span><br><span class="line">    public int undo() &#123;  </span><br><span class="line">        return adder.add(-value);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//计算器界面类：请求发送者  </span><br><span class="line">class CalculatorForm &#123;  </span><br><span class="line">    private AbstractCommand command;  </span><br><span class="line"></span><br><span class="line">    public void setCommand(AbstractCommand command) &#123;  </span><br><span class="line">        this.command = command;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //调用命令对象的execute()方法执行运算  </span><br><span class="line">    public void compute(int value) &#123;  </span><br><span class="line">        int i = command.execute(value);  </span><br><span class="line">        System.out.println(&quot;执行运算，运算结果为：&quot; + i);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //调用命令对象的undo()方法执行撤销  </span><br><span class="line">    public void undo() &#123;  </span><br><span class="line">        int i = command.undo();  </span><br><span class="line">        System.out.println(&quot;执行撤销，运算结果为：&quot; + i);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Client &#123;  </span><br><span class="line">    public static void main(String args[]) &#123;  </span><br><span class="line">        CalculatorForm form = new CalculatorForm();  </span><br><span class="line">        AbstractCommand command;  </span><br><span class="line">        command = new ConcreteCommand();  </span><br><span class="line">        form.setCommand(command); //向发送者注入命令对象  </span><br><span class="line"></span><br><span class="line">        form.compute(10);  </span><br><span class="line">        form.compute(5);  </span><br><span class="line">        form.compute(10);  </span><br><span class="line">        form.undo();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="请求日志"><a href="#请求日志" class="headerlink" title="请求日志"></a>请求日志</h5><p><img src="/images/design-pattern/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F3.png" alt="命令模式3.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line">import java.io.*;  </span><br><span class="line">import java.util.*;  </span><br><span class="line"></span><br><span class="line">//抽象命令类，由于需要将命令对象写入文件，因此它实现了Serializable接口  </span><br><span class="line">abstract class Command implements Serializable &#123;  </span><br><span class="line">    protected String name; //命令名称  </span><br><span class="line">    protected String args; //命令参数  </span><br><span class="line">    protected ConfigOperator configOperator; //维持对接收者对象的引用  </span><br><span class="line"></span><br><span class="line">    public Command(String name) &#123;  </span><br><span class="line">        this.name = name;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public String getName() &#123;  </span><br><span class="line">        return this.name;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;  </span><br><span class="line">        this.name = name;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void setConfigOperator(ConfigOperator configOperator) &#123;  </span><br><span class="line">        this.configOperator = configOperator;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //声明两个抽象的执行方法execute()  </span><br><span class="line">    public abstract void execute(String args);  </span><br><span class="line">    public abstract void execute();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//增加命令类：具体命令  </span><br><span class="line">class InsertCommand extends Command &#123;  </span><br><span class="line">    public InsertCommand(String name) &#123;  </span><br><span class="line">        super(name);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void execute(String args) &#123;  </span><br><span class="line">        this.args = args;  </span><br><span class="line">        configOperator.insert(args);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void execute() &#123;  </span><br><span class="line">        configOperator.insert(this.args);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//修改命令类：具体命令  </span><br><span class="line">class ModifyCommand extends Command &#123;  </span><br><span class="line">    public ModifyCommand(String name) &#123;  </span><br><span class="line">        super(name);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void execute(String args) &#123;  </span><br><span class="line">        this.args = args;  </span><br><span class="line">        configOperator.modify(args);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void execute() &#123;  </span><br><span class="line">        configOperator.modify(this.args);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//省略了删除命令类DeleteCommand  </span><br><span class="line"></span><br><span class="line">//配置文件操作类：请求接收者。由于ConfigOperator类的对象是Command的成员对象，它也将随Command对象一起写入文件，因此ConfigOperator也需要实现Serializable接口  </span><br><span class="line">class ConfigOperator implements Serializable &#123;  </span><br><span class="line">    public void insert(String args) &#123;  </span><br><span class="line">        System.out.println(&quot;增加新节点：&quot; + args);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void modify(String args) &#123;  </span><br><span class="line">        System.out.println(&quot;修改节点：&quot; + args);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public void delete(String args) &#123;  </span><br><span class="line">        System.out.println(&quot;删除节点：&quot; + args);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//配置文件设置窗口类：请求发送者  </span><br><span class="line">class ConfigSettingWindow &#123;  </span><br><span class="line">    //定义一个集合来存储每一次操作时的命令对象  </span><br><span class="line">    private ArrayList&lt;Command&gt; commands = new ArrayList&lt;Command&gt;();  </span><br><span class="line">    private Command command;   </span><br><span class="line"></span><br><span class="line">    //注入具体命令对象  </span><br><span class="line">    public void setCommand(Command command) &#123;  </span><br><span class="line">        this.command = command;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //执行配置文件修改命令，同时将命令对象添加到命令集合中  </span><br><span class="line">    public void call(String args) &#123;  </span><br><span class="line">        command.execute(args);  </span><br><span class="line">        commands.add(command);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //记录请求日志，生成日志文件，将命令集合写入日志文件  </span><br><span class="line">    public void save() &#123;  </span><br><span class="line">        FileUtil.writeCommands(commands);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //从日志文件中提取命令集合，并循环调用每一个命令对象的execute()方法来实现配置文件的重新设置  </span><br><span class="line">    public void recover() &#123;  </span><br><span class="line">        ArrayList list;  </span><br><span class="line">        list = FileUtil.readCommands();  </span><br><span class="line"></span><br><span class="line">        for (Object obj : list) &#123;  </span><br><span class="line">            ((Command)obj).execute();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//工具类：文件操作类  </span><br><span class="line">class FileUtil &#123;  </span><br><span class="line">    //将命令集合写入日志文件  </span><br><span class="line">    public static void writeCommands(ArrayList commands) &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            FileOutputStream file = new FileOutputStream(&quot;config.log&quot;);  </span><br><span class="line">            //创建对象输出流用于将对象写入到文件中  </span><br><span class="line">            ObjectOutputStream objout = new ObjectOutputStream(new BufferedOutputStream(file));  </span><br><span class="line">            //将对象写入文件  </span><br><span class="line">            objout.writeObject(commands);  </span><br><span class="line">            objout.close();  </span><br><span class="line">            &#125;  </span><br><span class="line">        catch(Exception e) &#123;  </span><br><span class="line">                System.out.println(&quot;命令保存失败！&quot;);    </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">            &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //从日志文件中提取命令集合  </span><br><span class="line">    public static ArrayList readCommands() &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            FileInputStream file = new FileInputStream(&quot;config.log&quot;);  </span><br><span class="line">            //创建对象输入流用于从文件中读取对象  </span><br><span class="line">            ObjectInputStream objin = new ObjectInputStream(new BufferedInputStream(file));  </span><br><span class="line"></span><br><span class="line">            //将文件中的对象读出并转换为ArrayList类型  </span><br><span class="line">            ArrayList commands = (ArrayList)objin.readObject();  </span><br><span class="line">            objin.close();  </span><br><span class="line">            return commands;  </span><br><span class="line">            &#125;  </span><br><span class="line">        catch(Exception e) &#123;  </span><br><span class="line">                System.out.println(&quot;命令读取失败！&quot;);  </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">                return null;      </span><br><span class="line">            &#125;         </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class Client &#123;  </span><br><span class="line">    public static void main(String args[]) &#123;  </span><br><span class="line">        ConfigSettingWindow csw = new ConfigSettingWindow(); //定义请求发送者  </span><br><span class="line">        Command command; //定义命令对象  </span><br><span class="line">        ConfigOperator co = new ConfigOperator(); //定义请求接收者  </span><br><span class="line"></span><br><span class="line">        //四次对配置文件的更改  </span><br><span class="line">        command = new InsertCommand(&quot;增加&quot;);  </span><br><span class="line">        command.setConfigOperator(co);  </span><br><span class="line">        csw.setCommand(command);  </span><br><span class="line">        csw.call(&quot;网站首页&quot;);  </span><br><span class="line"></span><br><span class="line">        command = new InsertCommand(&quot;增加&quot;);  </span><br><span class="line">        command.setConfigOperator(co);  </span><br><span class="line">        csw.setCommand(command);  </span><br><span class="line">        csw.call(&quot;端口号&quot;);  </span><br><span class="line"></span><br><span class="line">        command = new ModifyCommand(&quot;修改&quot;);  </span><br><span class="line">        command.setConfigOperator(co);  </span><br><span class="line">        csw.setCommand(command);  </span><br><span class="line">        csw.call(&quot;网站首页&quot;);  </span><br><span class="line"></span><br><span class="line">        command = new ModifyCommand(&quot;修改&quot;);  </span><br><span class="line">        command.setConfigOperator(co);  </span><br><span class="line">        csw.setCommand(command);          </span><br><span class="line">        csw.call(&quot;端口号&quot;);  </span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;----------------------------&quot;);  </span><br><span class="line">        System.out.println(&quot;保存配置&quot;);  </span><br><span class="line">        csw.save();  </span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;----------------------------&quot;);   </span><br><span class="line">        System.out.println(&quot;恢复配置&quot;);  </span><br><span class="line">        System.out.println(&quot;----------------------------&quot;);   </span><br><span class="line">        csw.recover();    </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="宏命令"><a href="#宏命令" class="headerlink" title="宏命令"></a>宏命令</h5><p>定义：</p>
+<blockquote>
+<p>宏命令(Macro Command)又称为组合命令，它是组合模式和命令模式联用的产物。<br>宏命令是一个具体命令类，它拥有一个集合属性，在该集合中包含了对其他命令对象的引用。通常宏命令不直接与请求接收者交互，而是通过它的成员来调用接收者的方法。当调用宏命令的execute()方法时，将递归调用它所包含的每个成员命令的execute()方法，一个宏命令的成员可以是简单命令，还可以继续是宏命令。执行一个宏命令将触发多个具体命令的执行，从而实现对命令的批处理，</p>
+</blockquote>
+<p>宏命令结构图：<br><img src="/images/design-pattern/%E5%AE%8F%E5%91%BD%E4%BB%A4%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="宏命令结构图.png"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Hare</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"># 设计模式</a>
+                    
+                        <a href="/tags/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/"># 行为型模式</a>
+                    
+                        <a href="/tags/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/"># 命令模式</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/25/interpreter-pattern/">设计模式-解释器模式</a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/25/chain-of-responsibility-pattern/">设计模式-职责链模式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Hare | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
