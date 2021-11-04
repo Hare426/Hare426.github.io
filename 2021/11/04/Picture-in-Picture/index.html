@@ -8,7 +8,7 @@
 
 
 
-<title>hexo 常用命令 | Hare&#39;s Blog</title>
+<title>Chrome画中画插件 | Hare&#39;s Blog</title>
 
 
 
@@ -104,11 +104,73 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">hexo 常用命令</h1>
+            <h1 class="post-title">Chrome画中画插件</h1>
             
                 <div class="post-meta">
                     
@@ -117,14 +179,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">九月 9, 2021&nbsp;&nbsp;22:15:20</a>
+                        Date: <a href="#">十一月 4, 2021&nbsp;&nbsp;15:56:20</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/hexo/">hexo</a>
+                                <a href="/categories/MacOs/">MacOs</a>
                             
                         </span>
                     
@@ -133,12 +195,7 @@
         </header>
 
         <div class="post-content">
-            <ul>
-<li>hexo server 本地运用</li>
-<li>hexo generate 生成静态文件</li>
-<li>hexo deploy 部署至git</li>
-<li>hexo clean 清理缓存文件</li>
-</ul>
+            <h4 id="Picture-in-Picture-Extension-by-Google-v1-10-画中画模式"><a href="#Picture-in-Picture-Extension-by-Google-v1-10-画中画模式" class="headerlink" title="Picture-in-Picture Extension (by Google) v1.10 画中画模式"></a>Picture-in-Picture Extension (by Google) v1.10 画中画模式</h4><p>Keyboard shortcut: Alt + P (⌥ + P on macOS)</p>
 
         </div>
 
@@ -167,7 +224,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/hexo/"># hexo</a>
+                        <a href="/tags/MacOs/"># MacOs</a>
                     
                         
                 </span>
@@ -180,10 +237,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/11/04/Picture-in-Picture/">Chrome画中画插件</a>
             
-            
-            <a class="next" rel="next" href="/2020/02/20/macOs-app-icon-error/">MacOs应用程序图标显示异常</a>
+            <a class="next" rel="next" href="/2021/09/09/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">hexo 常用命令</a>
             
         </section>
 
