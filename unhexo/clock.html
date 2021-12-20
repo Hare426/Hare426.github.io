@@ -38,15 +38,15 @@
           background-color: #ffffff;
           margin: 0;
           padding: 0;
-          /* height:100%; */
+          height:100%;
           width: 100%;
           overflow: hidden;
         }
         .page {
           position: fixed;
           width: 100%;
-          /* height: 100%; */
-          margin: 10;
+          height: 100%;
+          margin: 0;
           padding: 0;
           overflow: hidden;
           /* background-color: aquamarine; */
@@ -434,7 +434,7 @@
       timezone = getQueryVariable("timezone") ? getQueryVariable("timezone") : 8
       style = getQueryVariable("style") ? getQueryVariable("style") : (getCookieStyle() ? getCookieStyle() : 0)
       if(style == 0){
-        showTips("TIPS","try these urls:\n/clock?timezone=+10&style=3\n/clock?motto=hello\\nworld\ntips closing in 10s",10000);
+        showTips("TIPS","try these urls:\n/clock?timezone=+10&style=3\n/clock?motto=hello\\nworld\ntips closing in 10s",1000);
       }
       clock_start();
       changeStyle();
