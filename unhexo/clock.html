@@ -243,12 +243,13 @@
       function changeStyle() {
         var clientHeight = document.documentElement.clientHeight;
         var clientWidth = document.documentElement.clientWidth;
+        console.log(style);
         switch (style) {
           case 1:
           case "1":
             saveStyle(style);
             pageDiv.classList.remove('style-smaller-motto');
-            pageDiv.classList.add('style-remove-motto')
+            // pageDiv.classList.add('style-remove-motto')
             setWidgetHeight(clientHeight, 0.7, 0.3, 0);
             style = 2;
             break;
@@ -257,8 +258,9 @@
             saveStyle(style);
             pageDiv.classList.add('style-rotate270');
             pageDiv.classList.add('style-larger-time')
-            pageDiv.classList.add('style-remove-motto')
-            setWidgetHeight(clientWidth, 0.7, 0.3, 0);
+            pageDiv.classList.add('style-remove-date')
+            // pageDiv.classList.add('style-remove-motto')
+            setWidgetHeight(clientWidth, 0.7, 0, 0.3);
             var bais = (clientHeight - clientWidth) / 2;
             setPage(clientHeight, clientWidth, bais, -bais);
 // hack for kindle 1
@@ -275,8 +277,8 @@
             saveStyle(style);
             pageDiv.classList.remove('style-rotate270');
             pageDiv.classList.add('style-larger-time');
-            pageDiv.classList.add('style-remove-motto');
-            setWidgetHeight(clientWidth, 0.7, 0.3, 0);
+            // pageDiv.classList.add('style-remove-motto');
+            setWidgetHeight(clientWidth, 0.7, 0, 0.3);
             var bais = (clientHeight - clientWidth) / 2;
 // hack for kindle 2
             setPage(clientHeight*0.5, clientWidth*0.5, bais, -bais);
@@ -298,7 +300,7 @@
             saveStyle(style);
             pageDiv.classList.remove('style-rotate90');
             pageDiv.classList.remove('style-remove-motto')
-            pageDiv.classList.add('style-remove-date')
+            // pageDiv.classList.add('style-remove-date')
             pageDiv.classList.add('style-default');
             setWidgetHeight(clientHeight, 0.7, 0, 0.3);
             setPage(clientWidth, clientHeight, 0, 0);
@@ -327,8 +329,8 @@
       }
 
       function fontSizeAutoChange(){
-        var clientHeight = document.documentElement.clientHeight;
-        var clientWidth = document.documentElement.clientWidth;
+        var clientHeight = document.documentElement.clientHeight - 5;
+        var clientWidth = document.documentElement.clientWidth - 5;
         tipsDiv.style.width = clientWidth+"px";
         tipsDiv.style.height = clientHeight+"px";
         tipsTitleDiv.style.height = clientHeight*0.5+"px";
@@ -389,15 +391,10 @@
 
       function setMotto(text) {
         var motto_list = [
-          'Pain past is pleasure.',
-          'While there is life, there is hope.',
-          'Wisdom in the mind is better than\\nmoney in the hand.',
-          'Storms make trees take deeper roots.',
-          'Patience is bitter,\\nbut its fruit is sweet.\\n----Rousseau',
-          'Nothing is impossible for\\na willing heart.',
-          'The shortest answer is doing.',
-          'All things are difficult befor\\nthey are easy.',
-          'Great hopes make great man.',
+          '不妨，不妨，来日方长',
+          '别担心，你迟早会成为别人翘首以盼的惊喜',
+          '怂，就是人生最大的良药',
+          '看在你愚蠢的份上，我再让一步',
         ]
         if(!text){
           text = motto
