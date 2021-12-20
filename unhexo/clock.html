@@ -243,8 +243,8 @@
       }
 
       function changeStyle() {
-        var clientHeight = document.documentElement.clientHeight-30;
-        var clientWidth = document.documentElement.clientWidth-15;
+        var clientHeight = document.documentElement.clientHeight;
+        var clientWidth = document.documentElement.clientWidth;
         console.log(style);
         switch (style) {
           case 1:
@@ -262,7 +262,7 @@
             pageDiv.classList.add('style-larger-time')
             // pageDiv.classList.add('style-remove-date')
             pageDiv.classList.add('style-remove-motto')
-            setWidgetHeight(clientWidth, 0.5, 0, 0.5);
+            setWidgetHeight(clientWidth, 0.7, 0, 0.3);
             var bais = (clientHeight - clientWidth) / 2;
             setPage(clientHeight, clientWidth, bais, -bais);
 // hack for kindle 1
