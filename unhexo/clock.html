@@ -38,34 +38,34 @@
           background-color: #ffffff;
           margin: 0;
           padding: 0;
-          height: 100%;
-          width: 100%;
+          height:98%;
+          width: 98%;
         }
         .page {
           position: fixed;
-          width: 100%;
-          height: 100%;
+          width: 98%;
+          height: 98%;
           /* background-color: aquamarine; */
         }
         #time,
         #date {
-          width: 100%;
+          width: 98%;
           margin: 0;padding: 0;
           margin: auto;
           text-align: center;
         }
         #time {
           top: 0;
-          height: 40%;
+          height: 39%;
           font-size: 10rem;
           font-weight: 700;
         }
         #date {
-          height: 30%;
+          height: 29%;
           font-size: 5rem;
         }
         #motto {
-          height: 30%;
+          height: 29%;
           text-align: center;
           font-size: 1.8rem;
           line-height: 3rem;
@@ -249,7 +249,7 @@
           case "1":
             saveStyle(style);
             pageDiv.classList.remove('style-smaller-motto');
-            // pageDiv.classList.add('style-remove-motto')
+            pageDiv.classList.add('style-remove-motto')
             setWidgetHeight(clientHeight, 0.7, 0.3, 0);
             style = 2;
             break;
@@ -258,8 +258,8 @@
             saveStyle(style);
             pageDiv.classList.add('style-rotate270');
             pageDiv.classList.add('style-larger-time')
-            pageDiv.classList.add('style-remove-date')
-            // pageDiv.classList.add('style-remove-motto')
+            // pageDiv.classList.add('style-remove-date')
+            pageDiv.classList.add('style-remove-motto')
             setWidgetHeight(clientWidth, 0.7, 0, 0.3);
             var bais = (clientHeight - clientWidth) / 2;
             setPage(clientHeight, clientWidth, bais, -bais);
@@ -277,8 +277,8 @@
             saveStyle(style);
             pageDiv.classList.remove('style-rotate270');
             pageDiv.classList.add('style-larger-time');
-            // pageDiv.classList.add('style-remove-motto');
-            setWidgetHeight(clientWidth, 0.7, 0, 0.3);
+            pageDiv.classList.add('style-remove-motto');
+            setWidgetHeight(clientWidth, 0.7, 0.3, 0);
             var bais = (clientHeight - clientWidth) / 2;
 // hack for kindle 2
             setPage(clientHeight*0.5, clientWidth*0.5, bais, -bais);
@@ -300,7 +300,7 @@
             saveStyle(style);
             pageDiv.classList.remove('style-rotate90');
             pageDiv.classList.remove('style-remove-motto')
-            // pageDiv.classList.add('style-remove-date')
+            pageDiv.classList.add('style-remove-date')
             pageDiv.classList.add('style-default');
             setWidgetHeight(clientHeight, 0.7, 0, 0.3);
             setPage(clientWidth, clientHeight, 0, 0);
